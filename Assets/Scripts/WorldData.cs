@@ -7,9 +7,7 @@ public class WorldData
 {
     public GameObject[] Zones;
 
-    public WorldData(WorldSpace world)
-    {
-        Zones = world.zones; 
-    }
+    public WorldData(WorldSpace world) =>
+        Zones = world.zones;
 
 }

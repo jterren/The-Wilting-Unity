@@ -59,19 +59,19 @@ public class WorldSpace : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.T))
+        if (Input.GetKey(KeyCode.T))
         {
             Player.gameObject.transform.position = OverSeers[random].transform.position;
-            
+
         }
-        /*if (Input.GetKey(KeyCode.L))
+        if (Input.GetKey(KeyCode.N))
         {
             LoadWorld(); //Will result in error can't convert game objects to binary
         }
-        if (Input.GetKey(KeyCode.P))
+        if (Input.GetKey(KeyCode.M))
         {
             SaveWorld(); //Will result in error can't convert game objects to binary
-        }*/
+        }
     }
 
     void createZones()

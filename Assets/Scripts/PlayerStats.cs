@@ -29,17 +29,17 @@ public class PlayerStats : MonoBehaviour
 
 
     private void OnEnable()
-     {
-       /*curHealth = 100;
-       DmgLvl = 10;
-       curCash = 5000;
-       curKills = 0;*/
-       LoadPData();
-}
+    {
+        /*curHealth = 100;
+        DmgLvl = 10;
+        curCash = 5000;
+        curKills = 0;*/
+        LoadPData();
+    }
 
     private void OnDisable()
     {
-         SavePlayer();
+        SavePlayer();
     }
 
 
@@ -61,6 +61,8 @@ public class PlayerStats : MonoBehaviour
 
         healthbar.SetMaxHealth(100);
 
+        GameObject.FindGameObjectWithTag("Player").SetActive(true);
+
     }
 
     // Update is called once per frame
@@ -69,10 +71,10 @@ public class PlayerStats : MonoBehaviour
         curKills = GameObject.FindGameObjectWithTag("KillUI").GetComponent<KillUI>().KillCount;
         healthbar.SetHealth(curHealth);
 
-        if (curHealth <= 0)
-        {
-            PlayerDie();
-        }
+        // if (curHealth <= 0)
+        // {
+        //     PlayerDie();
+        // }
 
         if (random < 3)
         {
@@ -87,7 +89,7 @@ public class PlayerStats : MonoBehaviour
             curDmg = maxDmg;
         }
 
-        if(Input.GetKeyDown(KeyCode.P) == true)
+        if (Input.GetKeyDown(KeyCode.P) == true)
         {
             SavePlayer();
         }
@@ -123,11 +125,11 @@ public class PlayerStats : MonoBehaviour
 
     void PlayerDie()
     {
-       //Debug.Log(pData.PlayerKills.ToString());
-       this.gameObject.SetActive(false);
+        //Debug.Log(pData.PlayerKills.ToString());
+        this.gameObject.SetActive(false);
     }
 
-    public void SavePlayer ()
+    public void SavePlayer()
     {
         SaveSystem.SavePlayer(this);
     }

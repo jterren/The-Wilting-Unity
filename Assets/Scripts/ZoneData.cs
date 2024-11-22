@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ZoneData : MonoBehaviour
 {
@@ -35,12 +37,16 @@ public class ZoneData : MonoBehaviour
 
         GenerateGrass();
         DisableGrass();
-        if (-51 < this.transform.position.x && this.transform.position.x < 50)
+        // if (-51 < this.transform.position.x && this.transform.position.x < 50)
+        // {
+        //     if (-51 < this.transform.position.y && this.transform.position.y < 50)
+        //     {
+        //         EnableGrass();
+        //     }
+        // }
+        if (playerInZone())
         {
-            if (-51 < this.transform.position.y && this.transform.position.y < 50)
-            {
-                EnableGrass();
-            }
+            EnableGrass();
         }
     }
 
@@ -51,6 +57,7 @@ public class ZoneData : MonoBehaviour
             BeginSelfDestruct();
             stop = 1;
         }
+        playerInZone();
     }
 
     void BeginSelfDestruct()
@@ -72,8 +79,8 @@ public class ZoneData : MonoBehaviour
         {
             while (x <= maxX)
             {
-                random = Random.Range(0, groundType.Length);
-                spawn = new Vector2(x,y);
+                random = UnityEngine.Random.Range(0, groundType.Length);
+                spawn = new Vector2(x, y);
                 temp = Instantiate(groundType[random], spawn, Quaternion.identity) as GameObject;
                 temp.transform.SetParent(this.transform);
                 grassCells[count] = temp.gameObject;
@@ -100,7 +107,7 @@ public class ZoneData : MonoBehaviour
 
     private void DisableGrass()
     {
-       for(int i = 0; i < grassCells.Length; i++)
+        for (int i = 0; i < grassCells.Length; i++)
         {
             grassCells[i].SetActive(false);
         }
@@ -120,5 +127,13 @@ public class ZoneData : MonoBehaviour
         {
             DisableGrass();
         }
+    }
+
+    private bool playerInZone()
+    {
+        Vector3 pos = GameObject.Find("Player").GetComponent<Transform>().position;
+
+        if (minX - 51 <= pos.x && pos.x <= maxX + 51 && minY - 51 <= pos.y && pos.y <= maxY + 51) return true;
+        return false;
     }
 }

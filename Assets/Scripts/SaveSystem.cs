@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.SceneManagement;
 
 public static class SaveSystem
 {
     public static void SavePlayer(PlayerStats player)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/player.sav";
+        string path = Application.persistentDataPath + "/saves/players/player.sav";
         FileStream stream = new FileStream(path, FileMode.Create);
 
         PlayerData data = new PlayerData(player);
@@ -19,7 +20,7 @@ public static class SaveSystem
 
     public static PlayerData LoadPlayer()
     {
-        string path = Application.persistentDataPath + "/player.sav";
+        string path = Application.persistentDataPath + "/saves/players/player.sav";
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -39,12 +40,12 @@ public static class SaveSystem
 
     public static void SaveWorld(WorldSpace world)
     {
-        BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/world.sav";
+        BinaryFormatter formatter = new();
+        string path = Application.persistentDataPath + "/saves/worlds/world.sav";
         Debug.Log(path);
-        FileStream stream = new FileStream(path, FileMode.Create);
+        FileStream stream = new(path, FileMode.Create);
 
-        WorldData data = new WorldData(world);
+        WorldData data = new(world);
 
         formatter.Serialize(stream, data);
         stream.Close();
@@ -53,13 +54,12 @@ public static class SaveSystem
 
     public static WorldData LoadWorld()
     {
-        string path = Application.persistentDataPath + "/world.sav";
+        string path = Application.persistentDataPath + "/saves/worlds/world.sav";
         Debug.Log(path);
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
-
             WorldData data = formatter.Deserialize(stream) as WorldData;
             stream.Close();
             Debug.Log("Load Complete");

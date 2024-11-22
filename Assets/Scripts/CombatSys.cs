@@ -23,7 +23,7 @@ public class CombatSys : MonoBehaviour
 
     void Update()
     {
-        if(timeBtwAtk <= 0)
+        if (timeBtwAtk <= 0)
         {
             FindAttack();
         }
@@ -40,7 +40,7 @@ public class CombatSys : MonoBehaviour
         Collider2D[] enemiesToDamageUpperL = Physics2D.OverlapCircleAll(attackPosUpperL.position, attackRange, whatIsEnemies);
         Collider2D[] enemiesToDamageR = Physics2D.OverlapCircleAll(attackPosR.position, attackRange, whatIsEnemies);
         Collider2D[] enemiesToDamageUpperR = Physics2D.OverlapCircleAll(attackPosUpperR.position, attackRange, whatIsEnemies);
-    
+
         if (this.GetComponent<Movement>().attackD == "Left")
         {
             if (this.GetComponent<Animator>().GetInteger("DirY") == -1)

@@ -1,0 +1,376 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\TheWiltingUnity\\Unity.AI.Navigation.Editor.csproj": {}
+  },
+  "projects": {
+    "D:\\TheWiltingUnity\\Unity.AI.Navigation.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\TheWiltingUnity\\Unity.AI.Navigation.csproj",
+        "projectName": "Unity.AI.Navigation",
+        "projectPath": "D:\\TheWiltingUnity\\Unity.AI.Navigation.csproj",
+        "packagesPath": "C:\\Users\\Jake\\.nuget\\packages\\",
+        "outputPath": "D:\\TheWiltingUnity\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Jake\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {
+              "D:\\TheWiltingUnity\\UnityEditor.UI.csproj": {
+                "projectPath": "D:\\TheWiltingUnity\\UnityEditor.UI.csproj"
+              },
+              "D:\\TheWiltingUnity\\UnityEngine.UI.csproj": {
+                "projectPath": "D:\\TheWiltingUnity\\UnityEngine.UI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\TheWiltingUnity\\Unity.AI.Navigation.Editor.ConversionSystem.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\TheWiltingUnity\\Unity.AI.Navigation.Editor.ConversionSystem.csproj",
+        "projectName": "Unity.AI.Navigation.Editor.ConversionSystem",
+        "projectPath": "D:\\TheWiltingUnity\\Unity.AI.Navigation.Editor.ConversionSystem.csproj",
+        "packagesPath": "C:\\Users\\Jake\\.nuget\\packages\\",
+        "outputPath": "D:\\TheWiltingUnity\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Jake\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {
+              "D:\\TheWiltingUnity\\UnityEditor.TestRunner.csproj": {
+                "projectPath": "D:\\TheWiltingUnity\\UnityEditor.TestRunner.csproj"
+              },
+              "D:\\TheWiltingUnity\\UnityEditor.UI.csproj": {
+                "projectPath": "D:\\TheWiltingUnity\\UnityEditor.UI.csproj"
+              },
+              "D:\\TheWiltingUnity\\UnityEngine.TestRunner.csproj": {
+                "projectPath": "D:\\TheWiltingUnity\\UnityEngine.TestRunner.csproj"
+              },
+              "D:\\TheWiltingUnity\\UnityEngine.UI.csproj": {
+                "projectPath": "D:\\TheWiltingUnity\\UnityEngine.UI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\TheWiltingUnity\\Unity.AI.Navigation.Editor.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\TheWiltingUnity\\Unity.AI.Navigation.Editor.csproj",
+        "projectName": "Unity.AI.Navigation.Editor",
+        "projectPath": "D:\\TheWiltingUnity\\Unity.AI.Navigation.Editor.csproj",
+        "packagesPath": "C:\\Users\\Jake\\.nuget\\packages\\",
+        "outputPath": "D:\\TheWiltingUnity\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Jake\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {
+              "D:\\TheWiltingUnity\\Unity.AI.Navigation.csproj": {
+                "projectPath": "D:\\TheWiltingUnity\\Unity.AI.Navigation.csproj"
+              },
+              "D:\\TheWiltingUnity\\Unity.AI.Navigation.Editor.ConversionSystem.csproj": {
+                "projectPath": "D:\\TheWiltingUnity\\Unity.AI.Navigation.Editor.ConversionSystem.csproj"
+              },
+              "D:\\TheWiltingUnity\\UnityEditor.TestRunner.csproj": {
+                "projectPath": "D:\\TheWiltingUnity\\UnityEditor.TestRunner.csproj"
+              },
+              "D:\\TheWiltingUnity\\UnityEditor.UI.csproj": {
+                "projectPath": "D:\\TheWiltingUnity\\UnityEditor.UI.csproj"
+              },
+              "D:\\TheWiltingUnity\\UnityEngine.TestRunner.csproj": {
+                "projectPath": "D:\\TheWiltingUnity\\UnityEngine.TestRunner.csproj"
+              },
+              "D:\\TheWiltingUnity\\UnityEngine.UI.csproj": {
+                "projectPath": "D:\\TheWiltingUnity\\UnityEngine.UI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\TheWiltingUnity\\UnityEditor.TestRunner.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\TheWiltingUnity\\UnityEditor.TestRunner.csproj",
+        "projectName": "UnityEditor.TestRunner",
+        "projectPath": "D:\\TheWiltingUnity\\UnityEditor.TestRunner.csproj",
+        "packagesPath": "C:\\Users\\Jake\\.nuget\\packages\\",
+        "outputPath": "D:\\TheWiltingUnity\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Jake\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {
+              "D:\\TheWiltingUnity\\UnityEngine.TestRunner.csproj": {
+                "projectPath": "D:\\TheWiltingUnity\\UnityEngine.TestRunner.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\TheWiltingUnity\\UnityEditor.UI.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\TheWiltingUnity\\UnityEditor.UI.csproj",
+        "projectName": "UnityEditor.UI",
+        "projectPath": "D:\\TheWiltingUnity\\UnityEditor.UI.csproj",
+        "packagesPath": "C:\\Users\\Jake\\.nuget\\packages\\",
+        "outputPath": "D:\\TheWiltingUnity\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Jake\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {
+              "D:\\TheWiltingUnity\\UnityEditor.TestRunner.csproj": {
+                "projectPath": "D:\\TheWiltingUnity\\UnityEditor.TestRunner.csproj"
+              },
+              "D:\\TheWiltingUnity\\UnityEngine.TestRunner.csproj": {
+                "projectPath": "D:\\TheWiltingUnity\\UnityEngine.TestRunner.csproj"
+              },
+              "D:\\TheWiltingUnity\\UnityEngine.UI.csproj": {
+                "projectPath": "D:\\TheWiltingUnity\\UnityEngine.UI.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\TheWiltingUnity\\UnityEngine.TestRunner.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\TheWiltingUnity\\UnityEngine.TestRunner.csproj",
+        "projectName": "UnityEngine.TestRunner",
+        "projectPath": "D:\\TheWiltingUnity\\UnityEngine.TestRunner.csproj",
+        "packagesPath": "C:\\Users\\Jake\\.nuget\\packages\\",
+        "outputPath": "D:\\TheWiltingUnity\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Jake\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\TheWiltingUnity\\UnityEngine.UI.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\TheWiltingUnity\\UnityEngine.UI.csproj",
+        "projectName": "UnityEngine.UI",
+        "projectPath": "D:\\TheWiltingUnity\\UnityEngine.UI.csproj",
+        "packagesPath": "C:\\Users\\Jake\\.nuget\\packages\\",
+        "outputPath": "D:\\TheWiltingUnity\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Jake\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

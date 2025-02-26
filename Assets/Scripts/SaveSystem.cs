@@ -2,74 +2,96 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.SceneManagement;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using UnityEditor;
 
 public static class SaveSystem
 {
-    public static void SavePlayer(PlayerStats player)
+    private static SaveData _saveData = new();
+    private static readonly string SaveFolder = $"{Application.persistentDataPath}/saves/";
+
+    [System.Serializable]
+
+    public struct SaveData
     {
-        BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/saves/players/player.sav";
-        FileStream stream = new FileStream(path, FileMode.Create);
+        public PlayerSaveData PlayerData;
+        public SceneSaveData SceneSaveData;
+    }
+    public static string SaveFileName()
+    {
+        return $"{SaveFolder}{DateTime.UtcNow.ToString("yyyy-dd-M--HH-mm-ss")}.sav";
 
-        PlayerData data = new PlayerData(player);
-
-        formatter.Serialize(stream, data);
-        stream.Close();
-        Debug.Log("Save Complete");
     }
 
-    public static PlayerData LoadPlayer()
+    private static void HandleSaveData()
     {
-        string path = Application.persistentDataPath + "/saves/players/player.sav";
-        if (File.Exists(path))
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
-
-            PlayerData data = formatter.Deserialize(stream) as PlayerData;
-            stream.Close();
-            Debug.Log("Load Complete");
-            return data;
-        }
-        else
-        {
-            Debug.Log("Save file not found in " + path);
-            return null;
-        }
+        GameManager.Instance.Player.SavePlayerData(ref _saveData.PlayerData);
+        GameManager.Instance.Scene.Save(ref _saveData.SceneSaveData);
     }
 
-    public static void SaveWorld(WorldSpace world)
+    public static void Save()
     {
-        BinaryFormatter formatter = new();
-        string path = Application.persistentDataPath + "/saves/worlds/world.sav";
-        Debug.Log(path);
-        FileStream stream = new(path, FileMode.Create);
-
-        WorldData data = new(world);
-
-        formatter.Serialize(stream, data);
-        stream.Close();
-        Debug.Log("Save Complete");
+        HandleSaveData();
+        File.WriteAllText(SaveFileName(), JsonUtility.ToJson(_saveData, true));
     }
 
-    public static WorldData LoadWorld()
+    public static async Task AsynchronouslySave()
     {
-        string path = Application.persistentDataPath + "/saves/worlds/world.sav";
-        Debug.Log(path);
-        if (File.Exists(path))
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
-            WorldData data = formatter.Deserialize(stream) as WorldData;
-            stream.Close();
-            Debug.Log("Load Complete");
-            return data;
-        }
-        else
-        {
-            Debug.Log("Save file not found in " + path);
-            return null;
-        }
+        await SaveAsync();
+    }
+
+    private static async Task SaveAsync()
+    {
+        HandleSaveData();
+        await File.WriteAllTextAsync(SaveFileName(), JsonUtility.ToJson(_saveData, true));
+    }
+
+    private static void HandleLoadData()
+    {
+        GameManager.Instance.Scene.Load(_saveData.SceneSaveData);
+        GameManager.Instance.Player.LoadPlayerData(_saveData.PlayerData);
+    }
+
+
+    private static async Task HandleLoadDataAsync()
+    {
+        await GameManager.Instance.Scene.LoadAsync(_saveData.SceneSaveData);
+        await GameManager.Instance.Scene.WaitForSceneLoad();
+        GameManager.Instance.Player.LoadPlayerData(_saveData.PlayerData);
+    }
+
+    public static void Load(string filePath)
+    {
+        string saveData = File.ReadAllText(filePath);
+        _saveData = JsonUtility.FromJson<SaveData>(saveData);
+
+        HandleLoadData();
+    }
+
+    public static async Task LoadAsync(string filePath)
+    {
+        string saveData = File.ReadAllText(filePath);
+        _saveData = JsonUtility.FromJson<SaveData>(saveData);
+
+        await HandleLoadDataAsync();
+    }
+
+    public static async Task Resume()
+    {
+        string saveData = File.ReadAllText(GetRecentSave().FullName);
+        _saveData = JsonUtility.FromJson<SaveData>(saveData);
+
+        await HandleLoadDataAsync();
+    }
+
+    public static FileInfo GetRecentSave()
+    {
+        return new DirectoryInfo(SaveFolder)
+            .GetFiles("*.sav") // Get all .sav files
+            .OrderByDescending(f => f.LastWriteTime) // Sort by last modified time (most recent first)
+            .FirstOrDefault();
     }
 
 }

@@ -97,6 +97,7 @@ MonoBehaviour:
   - {fileID: 1853600971418692005, guid: 5b6f3d7fb48cd824095af7d3d6aa433d, type: 3}
   OverSeers: []
   RoundCounter: {fileID: 0}
+  Player: {fileID: 0}
   QuestUI: {fileID: 0}
   count: 0
 --- !u!68 &5064146425496978418

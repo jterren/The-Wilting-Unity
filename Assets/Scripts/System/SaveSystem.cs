@@ -10,7 +10,7 @@ using UnityEditor;
 public static class SaveSystem
 {
     private static SaveData _saveData = new();
-    private static readonly string SaveFolder = $"{Application.persistentDataPath}/saves/";
+    public static readonly string SaveFolder = $"{Application.persistentDataPath}/saves/";
 
     [System.Serializable]
 
@@ -25,6 +25,11 @@ public static class SaveSystem
 
     }
 
+    private static void createSaveFolder()
+    {
+        Directory.CreateDirectory(SaveFolder);
+    }
+
     private static void HandleSaveData()
     {
         GameManager.Instance.Player.SavePlayerData(ref _saveData.PlayerData);
@@ -34,6 +39,7 @@ public static class SaveSystem
     public static void Save()
     {
         HandleSaveData();
+        if (!Directory.Exists(SaveFolder)) Directory.CreateDirectory(SaveFolder);
         File.WriteAllText(SaveFileName(), JsonUtility.ToJson(_saveData, true));
     }
 
@@ -50,7 +56,6 @@ public static class SaveSystem
 
     private static void HandleLoadData()
     {
-        GameManager.Instance.Scene.Load(_saveData.SceneSaveData);
         GameManager.Instance.Player.LoadPlayerData(_saveData.PlayerData);
     }
 

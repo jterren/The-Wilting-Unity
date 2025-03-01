@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Rounds : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class Rounds : MonoBehaviour
     private GameObject[] Generators;
     public GameObject Player;
     public GameObject QuestUI;
+    public GameObject RoundUI;
 
     public int genCount = 1;
     public int maxGen;
@@ -40,6 +42,7 @@ public class Rounds : MonoBehaviour
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         QuestUI = GameObject.FindGameObjectWithTag("QuestUI");
+        RoundUI = GameObject.FindGameObjectWithTag("RoundCounter");
         PlayerAOE = Player.GetComponentsInChildren<CircleCollider2D>()[1];
 
         RoundStart = false;
@@ -63,29 +66,32 @@ public class Rounds : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Player = GameObject.FindGameObjectWithTag("Player");
-        if (Player.GetComponentInChildren<Collider2D>().IsTouching(triggerArea))
+        if (!zoneComplete)
         {
-            if (RoundStart == false && triggerArea.IsTouching(PlayerAOE) == true)
+            Player = GameObject.FindGameObjectWithTag("Player");
+            if (Player.GetComponentInChildren<Collider2D>().IsTouching(triggerArea))
             {
-                if (arrowNeed == false)
+                if (RoundStart == false && triggerArea.IsTouching(PlayerAOE) == true)
                 {
-                    QuestUI.GetComponent<QuestMarkers>().DisableArrow();
-                    arrowNeed = true;
+                    if (arrowNeed == false)
+                    {
+                        QuestUI.GetComponent<QuestMarkers>().DisableArrow();
+                        arrowNeed = true;
+                    }
+                    StartRound();
                 }
-                StartRound();
             }
-        }
 
-        if (enemyCounter > 0 && Input.GetKey(KeyCode.K) && RoundStart == true)
-        {
-            if (zoneComplete == false)
+            if (enemyCounter > 0 && Input.GetKey(KeyCode.K) && RoundStart == true)
             {
-                KillActiveEnemies();
+                if (zoneComplete == false)
+                {
+                    KillActiveEnemies();
+                }
             }
-        }
 
-        CheckStart();
+            CheckStart();
+        }
     }
 
     void CreateGenerators()
@@ -211,6 +217,7 @@ public class Rounds : MonoBehaviour
             genCount += 1;
         }
 
+        GameManager.Instance.RoundCounter += 1;
         roundCounter += 1;
     }
 

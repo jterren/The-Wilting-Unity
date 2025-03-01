@@ -10,7 +10,7 @@ public class RoundUI : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -18,7 +18,7 @@ public class RoundUI : MonoBehaviour
     {
         if (X != null)
         {
-            curRound = X.GetComponent<Rounds>().roundCounter;
+            curRound = GameManager.Instance.RoundCounter;
             this.GetComponent<Text>().text = curRound.ToString();
         }
 

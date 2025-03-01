@@ -99,6 +99,7 @@ MonoBehaviour:
   zoneLength: 0
   zoneHeight: 0
   arrowNeed: 0
+  spawnRange: 25
 --- !u!68 &7264853513844425658
 EdgeCollider2D:
   m_ObjectHideFlags: 0

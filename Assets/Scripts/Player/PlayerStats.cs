@@ -143,12 +143,11 @@ public class PlayerStats : MonoBehaviour
 
 }
 
-[System.Serializable]
+[Serializable]
 public struct PlayerSaveData
 {
     public Vector3 location;
     public int playerCash;
     public int playerDmg;
     public double playerHealth;
-
 }

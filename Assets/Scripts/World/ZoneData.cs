@@ -37,13 +37,6 @@ public class ZoneData : MonoBehaviour
 
         GenerateGrass();
         DisableGrass();
-        // if (-51 < this.transform.position.x && this.transform.position.x < 50)
-        // {
-        //     if (-51 < this.transform.position.y && this.transform.position.y < 50)
-        //     {
-        //         EnableGrass();
-        //     }
-        // }
         if (playerInZone())
         {
             EnableGrass();
@@ -63,7 +56,6 @@ public class ZoneData : MonoBehaviour
     void BeginSelfDestruct()
     {
         GameObject world = GameObject.FindGameObjectWithTag("World");
-        world.GetComponent<WorldSpace>().ClearZone(OverSeer);
         world.GetComponent<WorldSpace>().FindNewZone();
     }
 

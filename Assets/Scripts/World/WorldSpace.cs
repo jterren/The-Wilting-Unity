@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class WorldSpace : MonoBehaviour
 {
@@ -35,10 +34,9 @@ public class WorldSpace : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
         RoundCounter = GameObject.FindGameObjectWithTag("RoundCounter");
         QuestUI = GameObject.FindGameObjectWithTag("QuestUI");
-        // Player = GameManager.Instance.Player;
+        Player = GameManager.Instance.Player;
 
         xRange = maxX - minX;
         yRange = maxY - minY;
@@ -98,14 +96,6 @@ public class WorldSpace : MonoBehaviour
         count = 0;
     }
 
-    public void ClearZone(GameObject currentZone)
-    {
-        RoundCounter.GetComponent<RoundUI>().Disable();
-        Destroy(currentZone);
-        Debug.Log("Zone cleared, destroying enemy source.");
-        random = Random.Range(0, 63);
-    }
-
     public void FindNewZone()
     {
         random = Random.Range(0, 63);
@@ -113,8 +103,10 @@ public class WorldSpace : MonoBehaviour
         OverSeers[random].SetActive(true);
         curOverSeer = OverSeers[random];
         QuestUI.GetComponent<QuestMarkers>().EnableArrow();
-        /*Debug.Log("Random is " + random);
-        Debug.Log("Zone is " + Zone.transform.position);
-        Debug.Log("Zone is " + OverSeers[random].transform.position);*/
+    }
+
+    public void PauseGame()
+    {
+
     }
 }

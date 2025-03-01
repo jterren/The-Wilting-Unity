@@ -12,17 +12,12 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    public void LoadGame()
-    {
-        SaveSystem.Resume();
-    }
-
     public void Settings()
     {
-        SceneManager.LoadScene("World");
+        //TODO
     }
 
-    public void ExitGame()
+    public void ExitDesktop()
     {
         Application.Quit();
     }

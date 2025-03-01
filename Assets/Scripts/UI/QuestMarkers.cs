@@ -11,9 +11,14 @@ public class QuestMarkers : MonoBehaviour
     private GameObject Arrow;
     public GameObject Player;
 
-    private void Start()
+
+    private void Awake()
     {
         Arrow = GameObject.Find("Arrow");
+    }
+    private void Start()
+    {
+        // Arrow = GameObject.Find("Arrow");
         world = GameObject.FindGameObjectWithTag("World");
         ptrTransform = transform.Find("Arrow").GetComponent<RectTransform>();
     }
@@ -37,11 +42,11 @@ public class QuestMarkers : MonoBehaviour
 
     public void EnableArrow()
     {
-        GameObject.Find("Arrow").SetActive(true); //Fetch manually to avoid onStart error Arrow undefined.
+        Arrow.SetActive(true); //Fetch manually to avoid onStart error Arrow undefined.
     }
 
     public void DisableArrow()
     {
-       Arrow.SetActive(false);
+        Arrow.SetActive(false);
     }
 }

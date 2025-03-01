@@ -31,24 +31,27 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
         DontDestroyOnLoad(this.gameObject);
     }
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.N))
-        {
-            SaveSystem.Resume(); //Will result in error can't convert game objects to binary
-        }
-        if (Input.GetKey(KeyCode.M))
-        {
-            SaveSystem.Save(); //Will result in error can't convert game objects to binary
-        }
+
     }
 
     public PlayerStats Player { get; set; }
 
+    public Rounds Rounds { get; set; }
+
+    public int RoundCounter { get; set; } = 1;
+
     public SceneData Scene { get; set; }
 
     public SceneLoader SceneLoader { get; set; }
+
+    public string SelectedSave { get; set; }
 }

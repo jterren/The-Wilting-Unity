@@ -46,8 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b52b6dba0aedb4e95a77afc9ee6e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OverSeer: {fileID: 4134024283859100303, guid: b05f18b443ead6546a37c0c854d38361,
-    type: 3}
+  OverSeer: {fileID: 8209129739680136273}
   World: {fileID: 0}
   groundType:
   - {fileID: 8730558851626729843, guid: f4c87f75f5dfdc649a41dc7d54e1c584, type: 3}
@@ -189,6 +188,12 @@ PrefabInstance:
 --- !u!4 &6445762760855457055 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1279095118426739649, guid: b05f18b443ead6546a37c0c854d38361,
+    type: 3}
+  m_PrefabInstance: {fileID: 5238725610288193246}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8209129739680136273 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4134024283859100303, guid: b05f18b443ead6546a37c0c854d38361,
     type: 3}
   m_PrefabInstance: {fileID: 5238725610288193246}
   m_PrefabAsset: {fileID: 0}

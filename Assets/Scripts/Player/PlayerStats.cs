@@ -8,9 +8,7 @@ public class PlayerStats : MonoBehaviour
 {
     //public GameObject sleepButton;
     //private int maxCash = 1000000;
-    private int minHealth = 0;
-    private double maxHealth = 100;
-
+    private int maxHealth = 100;
     public double curHealth;
     public int DmgLvl;
     public int curCash;
@@ -20,54 +18,22 @@ public class PlayerStats : MonoBehaviour
     private int avgDmg;
     private int maxDmg;
     private int random;
-
-
     public HealthBar healthbar;
-
-
-    //public bool menuOpen;
-    //public bool canMove;
 
     private void Awake()
     {
         GameManager.Instance.Player = this;
     }
 
-    private void OnEnable()
-    {
-        curHealth = 100;
-        DmgLvl = 10;
-        curCash = 5000;
-        curKills = 0;
-        // LoadPData();
-    }
-
-    private void OnDisable()
-    {
-        // SavePlayer();
-    }
-
-
     // Use this for initialization
     void Start()
     {
-        //Player.transform.position = pData.Location;
-
-        /*
-        canMove = true;
-        menuOpen = false;
-        animator.SetBool("nearBed", false);
-        sleepButton.SetActive(false);*/
-
         minDmg = DmgLvl / 2;
         avgDmg = DmgLvl;
         maxDmg = DmgLvl * 2;
         random = UnityEngine.Random.Range(1, 9);
 
-        healthbar.SetMaxHealth(100);
-
-        GameObject.FindGameObjectWithTag("Player").SetActive(true);
-
+        healthbar.SetMaxHealth(maxHealth);
     }
 
     // Update is called once per frame
@@ -97,7 +63,6 @@ public class PlayerStats : MonoBehaviour
         {
             curHealth = 100;
         }
-
 
         random = UnityEngine.Random.Range(1, 9);
     }

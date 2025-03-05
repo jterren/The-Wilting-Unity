@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7294328397868946608}
   m_Layer: 0
   m_Name: GrassZone
-  m_TagString: Ground
+  m_TagString: Zone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32,6 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6445762760855457055}
+  - {fileID: 5236553218290652946}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &762244163
@@ -43,14 +44,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1853600971418692005}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65b52b6dba0aedb4e95a77afc9ee6e02, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e16d71bbc2a59246aef2be17de07537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   OverSeer: {fileID: 8209129739680136273}
   World: {fileID: 0}
   groundType:
-  - {fileID: 8730558851626729843, guid: f4c87f75f5dfdc649a41dc7d54e1c584, type: 3}
   - {fileID: 8730558851626729843, guid: 618c8b477d309384c9d83d01e2a110f3, type: 3}
+  - {fileID: 8730558851626729843, guid: f4c87f75f5dfdc649a41dc7d54e1c584, type: 3}
   - {fileID: 8730558851626729843, guid: b69685f4ae67ae240a268f5d0143cfcb, type: 3}
   minX: 0
   minY: 0
@@ -102,6 +103,37 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 75, y: 75}
   m_EdgeRadius: 0
+--- !u!1 &4160785072335820133
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5236553218290652946}
+  m_Layer: 0
+  m_Name: Terrain
+  m_TagString: Terrain
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5236553218290652946
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4160785072335820133}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1853600971418692012}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5238725610288193246
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -173,6 +205,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4268449088963291444, guid: b05f18b443ead6546a37c0c854d38361,
+        type: 3}
+      propertyPath: spacer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4268449088963291444, guid: b05f18b443ead6546a37c0c854d38361,
         type: 3}

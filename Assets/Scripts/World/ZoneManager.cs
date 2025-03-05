@@ -4,13 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class ZoneData : MonoBehaviour
+public class ZoneManager : MonoBehaviour
 {
     public GameObject OverSeer;
     public GameObject World;
     public GameObject[] groundType;
-    private GameObject[] grassCells = new GameObject[625];
-
     public int minX;
     public int minY;
     public int maxX;
@@ -22,12 +20,14 @@ public class ZoneData : MonoBehaviour
     private int random;
     private int stop;
     private bool generated = false;
+    private Transform parentTransform;
 
     void Start()
     {
         World = GameObject.FindGameObjectWithTag("World");
         zoneLength = World.GetComponent<WorldSpace>().zoneLength;
         zoneHeight = World.GetComponent<WorldSpace>().zoneHeight;
+        parentTransform = Tools.GetAllChildrenByTag(transform, "Terrain")[0].transform;
 
         minX = (int)transform.position.x;
         maxX = minX + zoneLength;
@@ -35,11 +35,11 @@ public class ZoneData : MonoBehaviour
         maxY = minY + zoneHeight;
         stop = 0;
 
-        GenerateGrass();
-        DisableGrass();
-        if (playerInZone())
+        GenerateTerrain();
+        DisableTerrain();
+        if (PlayerInZone())
         {
-            EnableGrass();
+            EnableTerrain();
         }
     }
 
@@ -50,7 +50,6 @@ public class ZoneData : MonoBehaviour
             BeginSelfDestruct();
             stop = 1;
         }
-        playerInZone();
     }
 
     void BeginSelfDestruct()
@@ -59,9 +58,8 @@ public class ZoneData : MonoBehaviour
         world.GetComponent<WorldSpace>().FindNewZone();
     }
 
-    private void GenerateGrass()
+    private void GenerateTerrain()
     {
-        GameObject temp;
         Vector2 spawn;
         float x = minX + (float).5;
         float y = minY + (float).5;
@@ -73,9 +71,7 @@ public class ZoneData : MonoBehaviour
             {
                 random = UnityEngine.Random.Range(0, groundType.Length);
                 spawn = new Vector2(x, y);
-                temp = Instantiate(groundType[random], spawn, Quaternion.identity) as GameObject;
-                temp.transform.SetParent(transform);
-                grassCells[count] = temp.gameObject;
+                Instantiate(groundType[random], spawn, Quaternion.identity).transform.SetParent(parentTransform);
                 count++;
                 x += 1;
             }
@@ -83,33 +79,26 @@ public class ZoneData : MonoBehaviour
             y += 1;
         }
         generated = true;
-        count = 0;
     }
 
-    private void EnableGrass()
+    private void EnableTerrain()
     {
         if (generated == true)
         {
-            for (int i = 0; i < grassCells.Length; i++)
-            {
-                grassCells[i].SetActive(true);
-            }
+            parentTransform.gameObject.SetActive(true);
         }
     }
 
-    private void DisableGrass()
+    private void DisableTerrain()
     {
-        for (int i = 0; i < grassCells.Length; i++)
-        {
-            grassCells[i].SetActive(false);
-        }
+        parentTransform.gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") == true)
         {
-            EnableGrass();
+            EnableTerrain();
         }
     }
 
@@ -117,11 +106,11 @@ public class ZoneData : MonoBehaviour
     {
         if (collision.CompareTag("Player") == true)
         {
-            DisableGrass();
+            DisableTerrain();
         }
     }
 
-    private bool playerInZone()
+    private bool PlayerInZone()
     {
         Vector3 pos = GameObject.Find("Player").GetComponent<Transform>().position;
 

@@ -20,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1279095118426739649
 Transform:
   m_ObjectHideFlags: 0
@@ -88,6 +88,7 @@ MonoBehaviour:
   - {fileID: 4238764481163718417, guid: 7bc47e7487852f04cbe8d85c1d95d975, type: 3}
   Player: {fileID: 4316663718750042892, guid: cd681b6362a3018409dd1aabe8b30cbd, type: 3}
   QuestUI: {fileID: 148007375316308249, guid: 351737613a297bc4d94f0e656ee238e1, type: 3}
+  RoundUI: {fileID: 0}
   genCount: 1
   maxGen: 10
   enemyPerGen: 5
@@ -99,7 +100,7 @@ MonoBehaviour:
   zoneLength: 0
   zoneHeight: 0
   arrowNeed: 0
-  spawnRange: 25
+  spacer: 10
 --- !u!68 &7264853513844425658
 EdgeCollider2D:
   m_ObjectHideFlags: 0

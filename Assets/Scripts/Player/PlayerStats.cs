@@ -8,7 +8,7 @@ public class PlayerStats : MonoBehaviour
 {
     //public GameObject sleepButton;
     //private int maxCash = 1000000;
-    private int maxHealth = 100;
+    private readonly int maxHealth = 100;
     public double curHealth;
     public int DmgLvl;
     public int curCash;
@@ -90,7 +90,7 @@ public class PlayerStats : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    public void SavePlayerData(ref PlayerSaveData data)
+    public void Save(ref PlayerSaveData data)
     {
         data.location = transform.position;
         data.playerCash = curCash;
@@ -98,7 +98,7 @@ public class PlayerStats : MonoBehaviour
         data.playerHealth = curHealth;
     }
 
-    public void LoadPlayerData(PlayerSaveData data)
+    public void Load(PlayerSaveData data)
     {
         transform.position = data.location;
         curCash = data.playerCash;

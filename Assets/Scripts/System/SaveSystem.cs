@@ -1,39 +1,33 @@
 ﻿using UnityEngine;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using UnityEngine.SceneManagement;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using UnityEditor;
 
 public static class SaveSystem
 {
     private static SaveData _saveData = new();
     public static readonly string SaveFolder = $"{Application.persistentDataPath}/saves/";
 
-    [System.Serializable]
+    [Serializable]
 
     public struct SaveData
     {
         public PlayerSaveData PlayerData;
-        public SceneSaveData SceneSaveData;
+        public SceneSaveData SceneData;
+        public WorldSaveData WorldData;
     }
     public static string SaveFileName()
     {
-        return $"{SaveFolder}{DateTime.UtcNow.ToString("yyyy-dd-M--HH-mm-ss")}.sav";
-
-    }
-
-    private static void createSaveFolder()
-    {
         Directory.CreateDirectory(SaveFolder);
+        return $"{SaveFolder}{DateTime.UtcNow:yyyy-dd-M--HH-mm-ss}.sav";
     }
 
     private static void HandleSaveData()
     {
-        GameManager.Instance.Player.SavePlayerData(ref _saveData.PlayerData);
-        GameManager.Instance.Scene.Save(ref _saveData.SceneSaveData);
+        GameManager.Instance.Scene.Save(ref _saveData.SceneData);
+        GameManager.Instance.WorldSpace.Save(ref _saveData.WorldData);
+        GameManager.Instance.Player.Save(ref _saveData.PlayerData);
     }
 
     public static void Save()
@@ -54,25 +48,12 @@ public static class SaveSystem
         await File.WriteAllTextAsync(SaveFileName(), JsonUtility.ToJson(_saveData, true));
     }
 
-    private static void HandleLoadData()
-    {
-        GameManager.Instance.Player.LoadPlayerData(_saveData.PlayerData);
-    }
-
-
     private static async Task HandleLoadDataAsync()
     {
-        await GameManager.Instance.Scene.LoadAsync(_saveData.SceneSaveData);
+        await GameManager.Instance.Scene.LoadAsync(_saveData.SceneData);
         await GameManager.Instance.Scene.WaitForSceneLoad();
-        GameManager.Instance.Player.LoadPlayerData(_saveData.PlayerData);
-    }
-
-    public static void Load(string filePath)
-    {
-        string saveData = File.ReadAllText(filePath);
-        _saveData = JsonUtility.FromJson<SaveData>(saveData);
-
-        HandleLoadData();
+        GameManager.Instance.WorldSpace.Load(_saveData.WorldData);
+        GameManager.Instance.Player.Load(_saveData.PlayerData);
     }
 
     public static async Task LoadAsync(string filePath)

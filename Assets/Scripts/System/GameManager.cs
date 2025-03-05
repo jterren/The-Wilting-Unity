@@ -54,4 +54,6 @@ public class GameManager : MonoBehaviour
     public SceneLoader SceneLoader { get; set; }
 
     public string SelectedSave { get; set; }
+
+    public WorldSpace WorldSpace { get; set; }
 }

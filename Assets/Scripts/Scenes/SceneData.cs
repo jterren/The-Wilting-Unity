@@ -19,11 +19,6 @@ public class SceneData : MonoBehaviour
         data.SceneId = Data.UniqueName;
     }
 
-    public void Load(SceneSaveData data)
-    {
-        GameManager.Instance.SceneLoader.LoadSceneByIndex(data.SceneId);
-    }
-
     public async Task LoadAsync(SceneSaveData data)
     {
         await GameManager.Instance.SceneLoader.LoadSceneByIndexAsync(data.SceneId);

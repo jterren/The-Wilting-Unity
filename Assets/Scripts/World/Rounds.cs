@@ -37,6 +37,8 @@ public class Rounds : MonoBehaviour
     public int zoneHeight;
     public bool arrowNeed = false;
 
+    public int spacer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,10 +59,7 @@ public class Rounds : MonoBehaviour
         zoneLength = GameObject.FindGameObjectWithTag("World").GetComponent<WorldSpace>().zoneLength;
         zoneHeight = GameObject.FindGameObjectWithTag("World").GetComponent<WorldSpace>().zoneHeight;
 
-        MinX = (float)(this.transform.position.x - 50);
-        MaxX = (float)(this.transform.position.x + 50);
-        MinY = (float)(this.transform.position.y - 50);
-        MaxY = (float)(this.transform.position.y + 50);
+        transform.localPosition = Tools.RandomizeChildPosition(0, 0, zoneLength, zoneHeight);
     }
 
     // Update is called once per frame
@@ -96,11 +95,6 @@ public class Rounds : MonoBehaviour
 
     void CreateGenerators()
     {
-        float x;
-        float y;
-        float spacerX = (float)1;
-        float spacerY = (float)1;
-        bool FindNew = false;
         int curGen = 0;
 
         Vector3[] UsedSpawn = new Vector3[genCount + 1];
@@ -108,41 +102,18 @@ public class Rounds : MonoBehaviour
 
         while (curGen < genCount)
         {
-            FindNew = false;
-            x = Random.Range(MinX + 5, MaxX - 5);
-            y = Random.Range(MinY + 5, MaxY - 5);
-
-            foreach (Vector3 Used in UsedSpawn)
-            {
-                if (Used.x >= (x - spacerX) && Used.x <= (x + spacerX))
-                {
-                    FindNew = true;
-                }
-
-                if (Used.y >= (y - spacerY) && Used.y <= (y + spacerY))
-                {
-                    FindNew = true;
-                }
-            }
-
-            if (FindNew == false)
-            {
-                Generators[curGen] = Instantiate(GenType[0], new Vector3(x, y, 0), Quaternion.identity) as GameObject;
-                curGen += 1;
-                UsedSpawn[curGen] = new Vector3(x, y, 0);
-            }
+            Generators[curGen] = Instantiate(GenType[0], Tools.RandomizeChildWithRadius(transform, spacer, spacer + 15), Quaternion.identity);
+            curGen += 1;
         }
-
-        UsedSpawn = new Vector3[genCount + 1];
     }
 
     void CreateEnemies(Transform targetSpawn)
     {
         for (int i = 0; i < enemyPerGen; i++)
         {
-            Enemies[enemyCounter] = Instantiate(EnemyType[0], targetSpawn.position, Quaternion.identity) as GameObject;
-            Enemies[enemyCounter].transform.position += (new Vector3(((float)0.01 * i), 0, 0));
-            Enemies[enemyCounter].GetComponent<EnemyData>().x = this.gameObject;
+            Enemies[enemyCounter] = Instantiate(EnemyType[0], targetSpawn.position, Quaternion.identity);
+            Enemies[enemyCounter].transform.position += new Vector3((float)0.01 * i, 0, 0);
+            Enemies[enemyCounter].GetComponent<EnemyData>().x = gameObject;
             Enemies[enemyCounter].GetComponent<EnemyData>().Player = Player.transform;
             Enemies[enemyCounter].SetActive(false);
             enemyCounter++;
@@ -158,8 +129,6 @@ public class Rounds : MonoBehaviour
             genChild = Generators[x].GetComponentsInChildren<Transform>();
             targetSpawn = genChild[1];
             CreateEnemies(targetSpawn);
-
-            genChild = null;
         }
     }
 

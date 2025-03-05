@@ -14,9 +14,11 @@ TagManager:
   - OverSeer
   - RoundCounter
   - World
-  - Grass
   - QuestUI
   - KillUI
+  - Undefined
+  - Zone
+  - Terrain
   layers:
   - Default
   - TransparentFX

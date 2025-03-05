@@ -14,8 +14,8 @@ public class EnemyData : MonoBehaviour
     private float dazedTime;
     public float startDazedTime;
     public GameObject x;
-
     public GameObject UI;
+    private Vector3 direction;
 
     // Start is called before the first frame update
     void Start()
@@ -46,22 +46,18 @@ public class EnemyData : MonoBehaviour
             speed = 0;
             dazedTime -= Time.deltaTime;
         }
-
-        Vector3 direction = Player.position - transform.position;
+        direction = Player.position - transform.position;
         direction.Normalize();
-        movement = direction;
     }
 
     private void FixedUpdate()
     {
-        if (aggro == true)
-        {
-            moveEnemy(movement);
-        }
+
+        MoveEnemy(direction);
     }
 
 
-    void moveEnemy(Vector2 direction)
+    void MoveEnemy(Vector2 direction)
     {
         rb.MovePosition((Vector2)transform.position + (direction * speed * Time.deltaTime));
     }
@@ -75,7 +71,7 @@ public class EnemyData : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Player") == true)
+        if (collision.gameObject.CompareTag("Player") == true)
         {
             aggro = true;
         }

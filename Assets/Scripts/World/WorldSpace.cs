@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,15 +20,20 @@ public class WorldSpace : MonoBehaviour
     public GameObject curOverSeer;
     public GameObject[] zones;
     public GameObject[] zoneTypes;
-    public GameObject[] OverSeers;
+    public List<GameObject> OverSeers;
     public GameObject RoundCounter;
     public PlayerStats Player;
-    //public GameObject Landscape;
     public GameObject QuestUI;
 
     public int count = 0;
     private int random;
+    public WorldData world;
+    private List<GameObject> prefabs;
 
+    private void Awake()
+    {
+        GameManager.Instance.WorldSpace = this;
+    }
 
 
     // Start is called before the first frame update
@@ -43,17 +48,26 @@ public class WorldSpace : MonoBehaviour
 
         zoneSpawns = new Vector2[zoneCount];
         zones = new GameObject[zoneCount];
-        OverSeers = new GameObject[zoneCount];
+        OverSeers = new List<GameObject>();
 
-        CreateZones();
-
-        OverSeers = GameObject.FindGameObjectsWithTag("OverSeer");
-        for (int i = 0; i < OverSeers.Length; i++)
+        if (world.gameObjects.Count == 0)
         {
-            OverSeers[i].SetActive(false);
+            Debug.Log("New Game detected");
+            CreateZones();
+            world = GetWorld();
+            FindNewZone();
         }
-
-        FindNewZone();
+        else
+        {
+            foreach (GameObjectData data in world.gameObjects)
+            {
+                GameObject prefab = prefabs.Find(p => p.name == data.prefabName);
+                if (prefab)
+                {
+                    GameObject obj = Instantiate(prefab, new Vector3(data.x, data.y, data.z), Quaternion.Euler(data.rotX, data.rotY, data.rotZ));
+                }
+            }
+        }
     }
 
     // Update is called once per frame
@@ -71,6 +85,7 @@ public class WorldSpace : MonoBehaviour
         int x = minX;
         int y = minY;
         Vector2 spawnPoint;
+        Transform parentTransform = GameObject.Find("Zones").transform;
 
         for (int j = 0; j < Mathf.Sqrt(zoneCount); j++)
         {
@@ -79,8 +94,7 @@ public class WorldSpace : MonoBehaviour
                 spawnPoint = new Vector2(x, y);
                 zoneSpawns[count] = spawnPoint;
                 zones[count] = Instantiate(zoneTypes[0], spawnPoint, Quaternion.identity);
-                zones[count].transform.SetParent(transform);
-                //zones[count].transform.SetParent(Landscape);
+                zones[count].transform.SetParent(parentTransform);
                 if (x < maxX)
                 {
                     x += zoneLength;
@@ -94,19 +108,74 @@ public class WorldSpace : MonoBehaviour
             }
         }
         count = 0;
+        OverSeers = Tools.FindInactiveGameObjectsByTag("OverSeer");
     }
 
     public void FindNewZone()
     {
-        random = Random.Range(0, 63);
+        random = UnityEngine.Random.Range(0, zones.Length - 1);
+        Debug.Log("Finding new zone: " + random);
+        Debug.Log(zones.Length - 1);
         Zone = zones[random];
         OverSeers[random].SetActive(true);
         curOverSeer = OverSeers[random];
         QuestUI.GetComponent<QuestMarkers>().EnableArrow();
     }
 
-    public void PauseGame()
-    {
 
+    private WorldData GetWorld()
+    {
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Zone"))
+        {
+            GameObjectData objData = new()
+            {
+                prefabName = obj.name.Replace("(Clone)", ""),
+                x = obj.transform.position.x,
+                y = obj.transform.position.y,
+                z = obj.transform.position.z,
+                rotX = obj.transform.rotation.eulerAngles.x,
+                rotY = obj.transform.rotation.eulerAngles.y,
+                rotZ = obj.transform.rotation.eulerAngles.z
+            };
+            world.gameObjects.Add(objData);
+        }
+        return world;
     }
+
+    public void Save(ref WorldSaveData data)
+    {
+        data.world = GetWorld();
+        Debug.Log("World Saved!");
+    }
+
+    public void Load(WorldSaveData data)
+    {
+        world = data.world;
+    }
+}
+[Serializable]
+public struct WorldSaveData
+{
+    public Vector2[] zoneSpawns;
+    public GameObject Zone;
+    public GameObject curOverSeer;
+    public GameObject[] zones;
+    public GameObject[] zoneTypes;
+    public GameObject[] OverSeers;
+    public GameObject RoundCounter;
+    public WorldData world;
+}
+
+[Serializable]
+public class WorldData
+{
+    public List<GameObjectData> gameObjects = new();
+}
+
+[Serializable]
+public class GameObjectData
+{
+    public string prefabName;  // Name or ID of the prefab
+    public float x, y, z;      // Position
+    public float rotX, rotY, rotZ; // Rotation
 }

@@ -45,15 +45,36 @@ public class Tools
     /*This functions goal is to create an abstract spacer (circle) around a parent and then create a random spawn location 
        outside the spacer out to the provided radius away.
     */
-    public static Vector3 RandomizeChildWithRadius(Transform parent, float spacer, float radius)
+    public static Vector3 RandomizeChildWithRadius(Transform parent, float radius)
     {
-        float angle = Random.Range(0f, Mathf.PI * 2);
-
+        float spacer = GetMaxObjRadius(parent);
+        radius += spacer;
         float randomDistance = Random.Range(spacer, radius);
-
+        float angle = Random.Range(0f, Mathf.PI * 2);
         float xOffset = Mathf.Cos(angle) * randomDistance;
         float yOffset = Mathf.Sin(angle) * randomDistance;
+        Vector3 spawn = parent.position + new Vector3(xOffset, yOffset, 0);
+        Bounds bounds = GameManager.Instance.WorldSpace.worldBounds;
+        spawn.x = Mathf.Clamp(spawn.x, bounds.min.x + 10, bounds.max.x - 10);
+        spawn.y = Mathf.Clamp(spawn.y, bounds.min.y + 10, bounds.max.y - 10);
 
-        return parent.position + new Vector3(xOffset, yOffset, 0);
+        return spawn;
+    }
+
+    private static float GetMaxObjRadius(Transform obj)
+    {
+        Collider collider = obj.GetComponentInChildren<Collider>();
+        if (collider != null)
+        {
+            return collider.bounds.extents.magnitude;
+        }
+
+        Renderer renderer = obj.GetComponentInChildren<Renderer>();
+        if (renderer != null)
+        {
+            return renderer.bounds.extents.magnitude;
+        }
+        Debug.Log("Bounds not found.");
+        return 10f;
     }
 }

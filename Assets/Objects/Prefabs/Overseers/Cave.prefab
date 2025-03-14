@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7264853513844425658}
   - component: {fileID: 2554045364511874667}
   - component: {fileID: 4678784222480686130}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Cave
   m_TagString: OverSeer
   m_Icon: {fileID: 0}
@@ -100,7 +100,6 @@ MonoBehaviour:
   zoneLength: 0
   zoneHeight: 0
   arrowNeed: 0
-  spacer: 10
 --- !u!68 &7264853513844425658
 EdgeCollider2D:
   m_ObjectHideFlags: 0

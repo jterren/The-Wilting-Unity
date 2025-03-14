@@ -7,13 +7,11 @@ public class Rounds : MonoBehaviour
 {
     public CircleCollider2D triggerArea;
     public CircleCollider2D PlayerAOE;
-
     public int roundCounter;
     public int maxRounds = 5;
     public bool RoundStart;
     public float waitTime = 5;
     public bool zoneComplete;
-
     public GameObject[] EnemyType;
     private GameObject[] Enemies;
     public GameObject[] GenType;
@@ -21,25 +19,19 @@ public class Rounds : MonoBehaviour
     public GameObject Player;
     public GameObject QuestUI;
     public GameObject RoundUI;
-
     public int genCount = 1;
     public int maxGen;
     public int enemyPerGen;
     private int enemyMax;
     public int enemyCounter;
-
     public float MinX;
     public float MaxX;
     public float MinY;
     public float MaxY;
-
     public int zoneLength;
     public int zoneHeight;
     public bool arrowNeed = false;
 
-    public int spacer;
-
-    // Start is called before the first frame update
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
@@ -62,7 +54,6 @@ public class Rounds : MonoBehaviour
         transform.localPosition = Tools.RandomizeChildPosition(0, 0, zoneLength, zoneHeight);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!zoneComplete)
@@ -96,13 +87,9 @@ public class Rounds : MonoBehaviour
     void CreateGenerators()
     {
         int curGen = 0;
-
-        Vector3[] UsedSpawn = new Vector3[genCount + 1];
-        UsedSpawn[0] = new Vector3(0, 0, 0);
-
         while (curGen < genCount)
         {
-            Generators[curGen] = Instantiate(GenType[0], Tools.RandomizeChildWithRadius(transform, spacer, spacer + 15), Quaternion.identity);
+            Generators[curGen] = Instantiate(GenType[0], Tools.RandomizeChildWithRadius(transform, 15), Quaternion.identity);
             curGen += 1;
         }
     }
@@ -193,12 +180,9 @@ public class Rounds : MonoBehaviour
     void KillActiveEnemies()
     {
         GameObject[] currentEnemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-        //Debug.Log("You prayed to God to kill all your enemies.");
         for (int i = 0; i < enemyCounter; i++)
         {
             currentEnemies[i].GetComponent<EnemyData>().health = 0;
         }
-        //Debug.Log("God killed all your enemies.");
     }
 }

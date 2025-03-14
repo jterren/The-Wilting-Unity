@@ -10,7 +10,7 @@ public class WorldSpace : MonoBehaviour
     public int maxY;
     private int xRange;
     private int yRange;
-
+    public Bounds worldBounds;
     public int zoneCount;
     public int zoneLength = 25;
     public int zoneHeight = 25;
@@ -49,6 +49,7 @@ public class WorldSpace : MonoBehaviour
         zoneSpawns = new Vector2[zoneCount];
         zones = new GameObject[zoneCount];
         OverSeers = new List<GameObject>();
+        worldBounds = new(new Vector3(minX, minY, 0), new Vector3(maxX, maxY, 0));
 
         if (world.gameObjects.Count == 0)
         {
@@ -64,7 +65,7 @@ public class WorldSpace : MonoBehaviour
                 GameObject prefab = prefabs.Find(p => p.name == data.prefabName);
                 if (prefab)
                 {
-                    GameObject obj = Instantiate(prefab, new Vector3(data.x, data.y, data.z), Quaternion.Euler(data.rotX, data.rotY, data.rotZ));
+                    GameObject obj = Instantiate(prefab, new Vector3(data.x, data.y, data.z), Quaternion.identity);
                 }
             }
         }
@@ -133,9 +134,6 @@ public class WorldSpace : MonoBehaviour
                 x = obj.transform.position.x,
                 y = obj.transform.position.y,
                 z = obj.transform.position.z,
-                rotX = obj.transform.rotation.eulerAngles.x,
-                rotY = obj.transform.rotation.eulerAngles.y,
-                rotZ = obj.transform.rotation.eulerAngles.z
             };
             world.gameObjects.Add(objData);
         }
@@ -177,5 +175,4 @@ public class GameObjectData
 {
     public string prefabName;  // Name or ID of the prefab
     public float x, y, z;      // Position
-    public float rotX, rotY, rotZ; // Rotation
 }

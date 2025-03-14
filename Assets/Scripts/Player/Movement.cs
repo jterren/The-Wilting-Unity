@@ -13,10 +13,11 @@ public class Movement : MonoBehaviour
     private int attackAnim;
     public string attackD;
     private int DirY;
-
+    private int DirX;
     public RuntimeAnimatorController Idle;
     public RuntimeAnimatorController AttackW;
     public RuntimeAnimatorController AttackI;
+    private Rigidbody2D body;
 
     // Use this for initialization
     void Start()
@@ -27,10 +28,14 @@ public class Movement : MonoBehaviour
         idleAnim = 0;
         attackAnim = 1;
         attackD = "";
+        body = GetComponent<Rigidbody2D>();
 
         animator = this.GetComponent<Animator>();
         animator.SetInteger("isMove", 0);
         animator.SetInteger("DirY", 0);
+        animator.SetInteger("isMove", 0);
+        animator.SetInteger("DirX", 0);
+        animator.speed = walkSpeed;
 
     }
 
@@ -51,6 +56,13 @@ public class Movement : MonoBehaviour
         FindMouseClick();
         GetMovement();
         SetAnim();
+    }
+
+    void FixedUpdate()
+    {
+        Vector2 movement = new(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        body.MovePosition(body.position + realSpeed * Time.fixedDeltaTime * movement);
+        animator.speed = realSpeed;
     }
 
 
@@ -77,28 +89,24 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetAxisRaw("Horizontal") > 0.5f)
         {
-            transform.Translate(new Vector3(Input.GetAxisRaw("Horizontal") * realSpeed * Time.deltaTime, 0f, 0f));
-            animator.SetInteger("DirY", -1);
+            animator.SetInteger("DirX", 1);
             animator.SetInteger("isMove", 1);
-            DirY = animator.GetInteger("DirY");
+            DirX = animator.GetInteger("DirX");
         }
         else if (Input.GetAxisRaw("Horizontal") < -0.5f)
         {
-            transform.Translate(new Vector3(Input.GetAxisRaw("Horizontal") * realSpeed * Time.deltaTime, 0f, 0f));
-            animator.SetInteger("DirY", -1);
+            animator.SetInteger("DirX", -1);
             animator.SetInteger("isMove", 1);
-            DirY = animator.GetInteger("DirY");
+            DirX = animator.GetInteger("DirX");
         }
         if (Input.GetAxisRaw("Vertical") > 0.5f)
         {
-            transform.Translate(new Vector3(0f, Input.GetAxisRaw("Vertical") * realSpeed * Time.deltaTime, 0f));
             animator.SetInteger("DirY", 1);
             animator.SetInteger("isMove", 1);
             DirY = animator.GetInteger("DirY");
         }
         else if (Input.GetAxisRaw("Vertical") < -0.5f)
         {
-            transform.Translate(new Vector3(0f, Input.GetAxisRaw("Vertical") * realSpeed * Time.deltaTime, 0f));
             animator.SetInteger("DirY", -1);
             animator.SetInteger("isMove", 1);
             DirY = animator.GetInteger("DirY");
@@ -113,11 +121,13 @@ public class Movement : MonoBehaviour
             {
                 animator.runtimeAnimatorController = AttackW as RuntimeAnimatorController;
                 animator.SetInteger("DirY", DirY);
+                animator.SetInteger("DirX", DirX);
             }
             else if (animator.GetInteger("isMove") == 0)
             {
                 animator.runtimeAnimatorController = AttackI as RuntimeAnimatorController;
                 animator.SetInteger("DirY", DirY);
+                animator.SetInteger("DirX", DirX);
             }
         }
         else if (animCurrent == idleAnim)

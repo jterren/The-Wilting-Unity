@@ -142,10 +142,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1853600971418692012}
     m_Modifications:
-    - target: {fileID: 1258837069, guid: b05f18b443ead6546a37c0c854d38361, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 1279095118426739649, guid: b05f18b443ead6546a37c0c854d38361,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -201,23 +197,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cave
       objectReference: {fileID: 0}
-    - target: {fileID: 4134024283859100303, guid: b05f18b443ead6546a37c0c854d38361,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 4268449088963291444, guid: b05f18b443ead6546a37c0c854d38361,
-        type: 3}
-      propertyPath: spacer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4268449088963291444, guid: b05f18b443ead6546a37c0c854d38361,
-        type: 3}
-      propertyPath: triggerArea
-      value: 
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1258837071, guid: b05f18b443ead6546a37c0c854d38361, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

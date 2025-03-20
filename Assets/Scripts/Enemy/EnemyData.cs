@@ -22,6 +22,7 @@ public class EnemyData : MonoBehaviour
     {
         rb = this.GetComponent<Rigidbody2D>();
         aggro = false;
+        Player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     // Update is called once per frame
@@ -32,7 +33,7 @@ public class EnemyData : MonoBehaviour
         if (health <= 0)
         {
             aggro = false;
-            x.GetComponent<Rounds>().enemyCounter -= 1;
+            // x.GetComponent<Rounds>().enemyCounter -= 1;
             GameObject.FindGameObjectWithTag("KillUI").GetComponent<KillUI>().AddKills(1);
             Destroy(gameObject);
         }

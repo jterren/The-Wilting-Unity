@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class QuestMarkers : MonoBehaviour
 {
-    private GameObject world;
-    public GameObject X;
-    private Vector3 targetPosition;
+    public GameObject Quest;
     private RectTransform ptrTransform;
     private GameObject Arrow;
     public GameObject Player;
@@ -14,25 +12,23 @@ public class QuestMarkers : MonoBehaviour
 
     private void Awake()
     {
+        Player = GameObject.FindGameObjectWithTag("Player");
         Arrow = GameObject.Find("Arrow");
     }
     private void Start()
     {
-        // Arrow = GameObject.Find("Arrow");
-        world = GameObject.FindGameObjectWithTag("World");
-        ptrTransform = transform.Find("Arrow").GetComponent<RectTransform>();
+        ptrTransform = Arrow.GetComponent<RectTransform>();
+        Quest = GameObject.FindGameObjectWithTag("Quest");
     }
 
     private void Update()
     {
-        X = world.GetComponent<WorldSpace>().curOverSeer;
-        targetPosition = X.transform.position;
-        CalculateAngle(targetPosition);
+        CalculateAngle(Quest.transform.position);
     }
 
     private void CalculateAngle(Vector3 Target)
     {
-        Vector3 toPosition = targetPosition;
+        Vector3 toPosition = Target;
         Vector3 fromPosition = Camera.main.transform.position;
         fromPosition.z = 0f;
         Vector3 dir = (toPosition - fromPosition).normalized;

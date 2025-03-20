@@ -15,7 +15,7 @@ public class Rounds : MonoBehaviour
     public GameObject[] EnemyType;
     private GameObject[] Enemies;
     public GameObject[] GenType;
-    private GameObject[] Generators;
+    private GameObject[] Spawners;
     public GameObject Player;
     public GameObject QuestUI;
     public GameObject RoundUI;
@@ -40,10 +40,10 @@ public class Rounds : MonoBehaviour
         PlayerAOE = Player.GetComponentsInChildren<CircleCollider2D>()[1];
 
         RoundStart = false;
-        Generators = new GameObject[maxGen];
+        Spawners = new GameObject[maxGen];
         triggerArea = GetComponent<CircleCollider2D>();
 
-        enemyMax = Generators.Length * enemyPerGen;
+        enemyMax = Spawners.Length * enemyPerGen;
         Enemies = new GameObject[enemyMax];
         enemyCounter = 0;
         roundCounter = 1;
@@ -84,12 +84,12 @@ public class Rounds : MonoBehaviour
         }
     }
 
-    void CreateGenerators()
+    void CreateSpawners()
     {
         int curGen = 0;
         while (curGen < genCount)
         {
-            Generators[curGen] = Instantiate(GenType[0], Tools.RandomizeChildWithRadius(transform, 15), Quaternion.identity);
+            Spawners[curGen] = Instantiate(GenType[0], Tools.RandomizeChildWithRadius(transform, 15), Quaternion.identity);
             curGen += 1;
         }
     }
@@ -113,7 +113,7 @@ public class Rounds : MonoBehaviour
         Transform targetSpawn;
         for (int x = 0; x < genCount; x++)
         {
-            genChild = Generators[x].GetComponentsInChildren<Transform>();
+            genChild = Spawners[x].GetComponentsInChildren<Transform>();
             targetSpawn = genChild[1];
             CreateEnemies(targetSpawn);
         }
@@ -136,13 +136,13 @@ public class Rounds : MonoBehaviour
 
     void StartRound()
     {
-        CreateGenerators();
+        CreateSpawners();
         GenerateEnemies();
         RoundStart = true;
 
         for (int i = 0; i < genCount; i++)
         {
-            Generators[i].transform.GetChild(0).gameObject.SetActive(false);
+            Spawners[i].transform.GetChild(0).gameObject.SetActive(false);
         }
 
         for (int i = 0; i < enemyCounter; i++)
@@ -155,7 +155,7 @@ public class Rounds : MonoBehaviour
     {
         for (int i = 0; i < genCount; i++)
         {
-            Destroy(Generators[i]);
+            Destroy(Spawners[i]);
         }
 
         if (roundCounter == maxRounds)
@@ -164,7 +164,7 @@ public class Rounds : MonoBehaviour
             zoneComplete = true;
         }
 
-        Generators = new GameObject[maxGen];
+        Spawners = new GameObject[maxGen];
         Enemies = new GameObject[enemyMax];
         enemyCounter = 0;
 

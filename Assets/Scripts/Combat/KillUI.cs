@@ -6,23 +6,24 @@ using UnityEngine.UI;
 
 public class KillUI : MonoBehaviour
 {
-    public GameObject Player;
-    public int KillCount;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-       this.GetComponent<Text>().text = KillCount.ToString();
-    }
+  public GameObject Player;
+  public int KillCount;
 
-    // Update is called once per frame
-    void Update()
-    {
-        this.GetComponent<Text>().text = KillCount.ToString();
-    }
+  // Start is called before the first frame update
+  void Start()
+  {
+    Player = GameObject.FindWithTag("Player");
+    this.GetComponent<Text>().text = KillCount.ToString();
+  }
 
-    public void AddKills(int x)
-    {
-      KillCount += x;
-    }
+  // Update is called once per frame
+  void Update()
+  {
+    this.GetComponent<Text>().text = KillCount.ToString();
+  }
+
+  public void AddKills(int x)
+  {
+    KillCount += x;
+  }
 }

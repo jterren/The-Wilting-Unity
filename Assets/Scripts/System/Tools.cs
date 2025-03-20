@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
-public class Tools
+public class Tools : MonoBehaviour
 {
     public static List<GameObject> FindInactiveGameObjectsByTag(string tag)
     {
@@ -76,5 +77,16 @@ public class Tools
         }
         Debug.Log("Bounds not found.");
         return 10f;
+    }
+
+    public static bool IsObjectInRegion(Vector2 objectPos, CreateMap.Region reg)
+    {
+        return objectPos.x >= reg.start.x && objectPos.x < (reg.start.x + reg.length) &&
+               objectPos.y >= reg.start.y && objectPos.y < (reg.start.y + reg.length);
+    }
+
+    public static void CompleteGame()
+    {
+        SceneManager.LoadScene(3);
     }
 }

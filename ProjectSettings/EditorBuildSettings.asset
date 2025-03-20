@@ -11,5 +11,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/World.unity
     guid: a2e437f8b1bb6464bb6d37467d074043
+  - enabled: 1
+    path: Assets/Scenes/Labyrinth.unity
+    guid: 06731089e3732cb4988e425c407b9437
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: 122008bd766882641b7affc9655ee107
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

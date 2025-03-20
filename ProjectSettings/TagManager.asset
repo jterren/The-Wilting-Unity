@@ -9,7 +9,6 @@ TagManager:
   - Explosive
   - Enemy
   - Aggro
-  - Generators
   - Trigger
   - OverSeer
   - RoundCounter
@@ -19,6 +18,9 @@ TagManager:
   - Undefined
   - Zone
   - Terrain
+  - Spawner
+  - Generators
+  - Quest
   layers:
   - Default
   - TransparentFX

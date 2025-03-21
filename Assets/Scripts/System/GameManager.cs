@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -40,20 +41,17 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-
     }
 
     public PlayerStats Player { get; set; }
-
-    public Rounds Rounds { get; set; }
-
-    public int RoundCounter { get; set; } = 1;
 
     public SceneData Scene { get; set; }
 
     public SceneLoader SceneLoader { get; set; }
 
     public string SelectedSave { get; set; }
+
+    public List<Maze> Mazes { get; set; }
 
     public WorldSpace WorldSpace { get; set; }
 }

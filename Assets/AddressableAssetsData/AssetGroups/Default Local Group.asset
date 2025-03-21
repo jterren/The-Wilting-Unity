@@ -1,0 +1,143 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_GUID: e33e5963848e76545b162ecf1314ad01
+  m_SerializeEntries:
+  - m_GUID: 09328424dca57fa48b116624a4ebcefc
+    m_Address: Assets/Objects/Prefabs/Cameras/Main Camera.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1b027e5ad3d456447bab3b0c38bcd3df
+    m_Address: Assets/Objects/Prefabs/Characters/Player.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1cdb2945f67b39f40ba3e315f49a066d
+    m_Address: Assets/Objects/Prefabs/UI/Buttons
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2bd7fa4e347952c43bac4588bf5ae636
+    m_Address: Assets/Objects/Prefabs/Enemy/UIC.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 600e9bc958cf9ba41923ee7025372136
+    m_Address: Assets/Objects/Prefabs/Landscape/Dirt_1_2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 618c8b477d309384c9d83d01e2a110f3
+    m_Address: Assets/Objects/Prefabs/Landscape/Dirt_1_1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 622aa8bb4e0802d41909e957a32cf0c0
+    m_Address: Assets/Objects/Prefabs/Landscape/Hedge_1_BB.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7bc47e7487852f04cbe8d85c1d95d975
+    m_Address: Assets/Objects/Prefabs/Spawners/Invisible.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 85e5d294cfe9e524fbd43dc713598819
+    m_Address: Assets/Objects/Prefabs/Landscape/Hedge_1_1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8e4ff9b4424b86d448d5bd1e93a8c658
+    m_Address: Assets/Objects/Prefabs/Landscape/Hedge_1_PF.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9c6c66bfa3e5bdf41803777bc780363e
+    m_Address: Assets/Objects/Prefabs/UI/Quest
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ecfde3563779e1438e142ac0cbbad44
+    m_Address: Assets/Objects/Prefabs/World/World.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b5d4b6169657919439d267d810614eb0
+    m_Address: Assets/Objects/Prefabs/UI/EventSystem.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bc04728de7b4c75499139c48bcf7f22d
+    m_Address: Assets/Objects/Prefabs/UI/PlayerUI.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c0195583dbad83b4e9d3874969ee95ab
+    m_Address: Assets/Objects/Prefabs/UI/KillCounter.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: db21ec6b5fc2d5241a71b80c32e3a6bb
+    m_Address: Assets/Objects/Prefabs/UI/HealthBar.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e09e9cf2d47807f4f8dcfe9f0732ecbb
+    m_Address: Assets/Objects/Prefabs/UI/Menus
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e1e8c63b2186117448c292d16b12aea4
+    m_Address: Assets/Objects/Prefabs/Placables/Wood Chest.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f698c8601af24f241a395dbc8339dc11
+    m_Address: Assets/Objects/Prefabs/UI/MazeBackground.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f6fd21b5be80e8f4b83170568b4069cb
+    m_Address: Assets/Objects/Prefabs/Landscape/Hedge_1_RB.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 10e285be17151974183640382e9bd564, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 14f633d9ec68f4f4d84f47444785b076, type: 2}
+    - {fileID: 11400000, guid: 3ea901f9ab874324ca7d33bdc2960e70, type: 2}

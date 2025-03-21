@@ -45,6 +45,7 @@ public class SceneLoader : MonoBehaviour
 
             while (!asyncLoad.isDone)
             {
+                Debug.Log(asyncLoad.progress);
                 if (asyncLoad.progress >= 0.9f)
                 {
                     asyncLoad.allowSceneActivation = true;

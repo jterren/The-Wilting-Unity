@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 769119357707640724}
   - component: {fileID: 769119357707640730}
   - component: {fileID: 769119357707640725}
-  - component: {fileID: 769119357707640731}
   m_Layer: 5
   m_Name: RoundCounter
   m_TagString: RoundCounter
@@ -81,20 +80,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
---- !u!114 &769119357707640731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 769119357707640727}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 847fdc278e4d72e478f5c79656631733, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  X: {fileID: 0}
-  curRound: 0
 --- !u!1 &769119359402159569
 GameObject:
   m_ObjectHideFlags: 0

@@ -208,6 +208,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dirt_1_1
       objectReference: {fileID: 0}
+    - target: {fileID: 8730558851626729843, guid: 618c8b477d309384c9d83d01e2a110f3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

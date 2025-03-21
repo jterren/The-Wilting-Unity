@@ -6,10 +6,12 @@ public class MainMenu : MonoBehaviour
     public void Resume()
     {
         SaveSystem.Resume();
+        this.gameObject.SetActive(false);
     }
     public void NewGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(2);
+        this.gameObject.SetActive(false);
     }
 
     public void Settings()

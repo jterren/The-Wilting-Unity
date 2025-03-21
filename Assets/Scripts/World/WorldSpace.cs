@@ -1,139 +1,57 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class WorldSpace : MonoBehaviour
 {
-    public int minX;
-    public int minY;
-    public int maxX;
-    public int maxY;
-    private int xRange;
-    private int yRange;
-    public Bounds worldBounds;
-    public int zoneCount;
-    public int zoneLength = 25;
-    public int zoneHeight = 25;
-
-    public Vector2[] zoneSpawns;
-    public GameObject Zone;
-    public GameObject curOverSeer;
-    public GameObject[] zones;
-    public GameObject[] zoneTypes;
-    public List<GameObject> OverSeers;
-    public GameObject RoundCounter;
     public PlayerStats Player;
-    public GameObject QuestUI;
-
-    public int count = 0;
-    private int random;
-    public WorldData world;
+    public WorldData world = new();
     private List<GameObject> prefabs;
 
     private void Awake()
     {
-        GameManager.Instance.WorldSpace = this;
-    }
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        RoundCounter = GameObject.FindGameObjectWithTag("RoundCounter");
-        QuestUI = GameObject.FindGameObjectWithTag("QuestUI");
         Player = GameManager.Instance.Player;
+        if (GameManager.Instance.WorldSpace == null) GameManager.Instance.WorldSpace = this;
+    }
 
-        xRange = maxX - minX;
-        yRange = maxY - minY;
+    private async void Start()
+    {
+        Dictionary<string, GameObject> prefabsDict = await Tools.LoadPrefabsAsync(world.gameObjects.Select(go => go.addressableKey).Distinct().ToList());
 
-        zoneSpawns = new Vector2[zoneCount];
-        zones = new GameObject[zoneCount];
-        OverSeers = new List<GameObject>();
-        worldBounds = new(new Vector3(minX, minY, 0), new Vector3(maxX, maxY, 0));
-
-        if (world.gameObjects.Count == 0)
+        if (GameManager.Instance.WorldSpace.world.gameObjects.Count != 0)
         {
-            Debug.Log("New Game detected");
-            CreateZones();
-            world = GetWorld();
-            FindNewZone();
-        }
-        else
-        {
-            foreach (GameObjectData data in world.gameObjects)
+            foreach (GameObjectData obj in world.gameObjects)
             {
-                GameObject prefab = prefabs.Find(p => p.name == data.prefabName);
-                if (prefab)
+                if (prefabsDict.TryGetValue(obj.prefabName, out GameObject prefab))
                 {
-                    GameObject obj = Instantiate(prefab, new Vector3(data.x, data.y, data.z), Quaternion.identity);
+                    if (!Tools.GetAllObjectsInScene().Any(p => p.name == obj.prefabName))
+                    {
+                        GameObject temp = Instantiate(prefab, new Vector2(obj.x, obj.y), Quaternion.identity);
+                        temp.SetActive(obj.active);
+                        temp.transform.parent = GameObject.Find(obj.parent).transform;
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning($"Prefab not found for: {obj.prefabName}");
                 }
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKey(KeyCode.T))
-        {
-            Player.transform.position = OverSeers[random].transform.position;
-
-        }
-    }
-
-    void CreateZones()
-    {
-        int x = minX;
-        int y = minY;
-        Vector2 spawnPoint;
-        Transform parentTransform = GameObject.Find("Zones").transform;
-
-        for (int j = 0; j < Mathf.Sqrt(zoneCount); j++)
-        {
-            for (int i = 0; i < Mathf.Sqrt(zoneCount); i++)
-            {
-                spawnPoint = new Vector2(x, y);
-                zoneSpawns[count] = spawnPoint;
-                zones[count] = Instantiate(zoneTypes[0], spawnPoint, Quaternion.identity);
-                zones[count].transform.SetParent(parentTransform);
-                if (x < maxX)
-                {
-                    x += zoneLength;
-                }
-                count++;
-            }
-            if (y < maxY)
-            {
-                y += zoneHeight;
-                x = minX;
-            }
-        }
-        count = 0;
-        OverSeers = Tools.FindInactiveGameObjectsByTag("OverSeer");
-    }
-
-    public void FindNewZone()
-    {
-        random = UnityEngine.Random.Range(0, zones.Length - 1);
-        Debug.Log("Finding new zone: " + random);
-        Debug.Log(zones.Length - 1);
-        Zone = zones[random];
-        OverSeers[random].SetActive(true);
-        curOverSeer = OverSeers[random];
-        QuestUI.GetComponent<QuestMarkers>().EnableArrow();
     }
 
 
     private WorldData GetWorld()
     {
-        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Zone"))
+
+        foreach (GameObject obj in Tools.GetAllChildren(GameObject.Find("Maze").transform))
         {
             GameObjectData objData = new()
             {
                 prefabName = obj.name.Replace("(Clone)", ""),
                 x = obj.transform.position.x,
                 y = obj.transform.position.y,
-                z = obj.transform.position.z,
             };
             world.gameObjects.Add(objData);
         }
@@ -142,7 +60,7 @@ public class WorldSpace : MonoBehaviour
 
     public void Save(ref WorldSaveData data)
     {
-        data.world = GetWorld();
+        data.world = world;
         Debug.Log("World Saved!");
     }
 
@@ -154,13 +72,6 @@ public class WorldSpace : MonoBehaviour
 [Serializable]
 public struct WorldSaveData
 {
-    public Vector2[] zoneSpawns;
-    public GameObject Zone;
-    public GameObject curOverSeer;
-    public GameObject[] zones;
-    public GameObject[] zoneTypes;
-    public GameObject[] OverSeers;
-    public GameObject RoundCounter;
     public WorldData world;
 }
 
@@ -173,6 +84,9 @@ public class WorldData
 [Serializable]
 public class GameObjectData
 {
-    public string prefabName;  // Name or ID of the prefab
-    public float x, y, z;      // Position
+    public string prefabName;
+    public float x, y;
+    public string parent;
+    public bool active;
+    public string addressableKey;
 }

@@ -23,7 +23,8 @@ public class QuestMarkers : MonoBehaviour
 
     private void Update()
     {
-        CalculateAngle(Quest.transform.position);
+        if (Quest != null)
+            CalculateAngle(Quest.transform.position);
     }
 
     private void CalculateAngle(Vector3 Target)

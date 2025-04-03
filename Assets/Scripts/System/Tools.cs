@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using System;
+using System.Runtime.Serialization.Formatters;
 
 public class Tools : MonoBehaviour
 {
@@ -22,6 +22,20 @@ public class Tools : MonoBehaviour
         }
 
         return inactiveObjects;
+    }
+    public static GameObject FindGameObjectByName(string name)
+    {
+        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.name == name)
+            {
+                return obj;
+            }
+        }
+
+        return null; ;
     }
 
     public static List<GameObject> GetAllChildrenByTag(Transform parent, string tag)
@@ -52,6 +66,18 @@ public class Tools : MonoBehaviour
         }
 
         return children;
+    }
+
+    public static GameObject GetChildByName(Transform parent, string name)
+    {
+        foreach (Transform child in parent.GetComponentsInChildren<Transform>(true))
+        {
+            if (child.name == name)
+            {
+                return child.gameObject;
+            }
+        }
+        return null;
     }
     public static Vector3 RandomizeChildPosition(float minX, float minY, float maxX, float maxY)
     {
@@ -106,7 +132,7 @@ public class Tools : MonoBehaviour
 
     public static void CompleteGame()
     {
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene("MainMenu");
     }
 
     public static List<GameObject> GetAllObjectsInScene()
@@ -123,6 +149,8 @@ public class Tools : MonoBehaviour
 
     public static async Task<Dictionary<string, GameObject>> LoadPrefabsAsync(List<string> prefabNames)
     {
+        var initHandle = Addressables.InitializeAsync();
+        await initHandle.Task;
         Dictionary<string, GameObject> loadedPrefabs = new();
 
         foreach (var prefabName in prefabNames)
@@ -169,5 +197,16 @@ public class Tools : MonoBehaviour
         }
 
         return false;
+    }
+
+    public static void FinishLoading()
+    {
+        GameObject player = FindGameObjectByName("Player");
+        GameObject loading = FindGameObjectByName("Loading");
+        GameObject background = FindGameObjectByName("MazeBackground");
+        FindInactiveGameObjectsByTag("UI").ForEach(obj => { if (!obj.activeInHierarchy) obj.SetActive(true); });
+        if (loading != null && loading.activeInHierarchy) loading.SetActive(false);
+        if (background != null && background.activeInHierarchy) background.SetActive(false);
+        if (player != null && !player.activeInHierarchy) player.SetActive(true);
     }
 }

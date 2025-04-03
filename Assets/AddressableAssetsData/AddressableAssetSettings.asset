@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 468a46d0ae32c3544b7d98094e6448a9, type: 3}
   m_Name: AddressableAssetSettings
   m_EditorClassIdentifier: 
-  m_DefaultGroup: e33e5963848e76545b162ecf1314ad01
+  m_DefaultGroup: 8c8e948c22cfc114abcdeafb52f4a9d6
   m_currentHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
@@ -24,11 +24,11 @@ MonoBehaviour:
   m_InternalBundleIdMode: 1
   m_AssetLoadMode: 0
   m_BundledAssetProviderType:
-    m_AssemblyName: 
-    m_ClassName: 
+    m_AssemblyName: Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_ClassName: UnityEngine.ResourceManagement.ResourceProviders.BundledAssetProvider
   m_AssetBundleProviderType:
-    m_AssemblyName: 
-    m_ClassName: 
+    m_AssemblyName: Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_ClassName: UnityEngine.ResourceManagement.ResourceProviders.AssetBundleProvider
   m_IgnoreUnsupportedFilesInBuild: 0
   m_UniqueBundleIds: 0
   m_EnableJsonCatalog: 0
@@ -59,8 +59,6 @@ MonoBehaviour:
   m_BuildAddressablesWithPlayerBuild: 0
   m_overridePlayerVersion: '[UnityEditor.PlayerSettings.bundleVersion]'
   m_GroupAssets:
-  - {fileID: 11400000, guid: e8dd3fd720081c045aff87bd54b04e77, type: 2}
-  - {fileID: 11400000, guid: 871dec669a5924742a949b2fd23cdb00, type: 2}
   - {fileID: 11400000, guid: 2f3005e0209c7114d9bd0f86e58d64f5, type: 2}
   m_BuildSettings:
     m_LogResourceManagerExceptions: 1
@@ -68,34 +66,34 @@ MonoBehaviour:
   m_ProfileSettings:
     m_Profiles:
     - m_InheritedParent: 
-      m_Id: 54845362a35095649b62fd0a306b8701
+      m_Id: 048a2f3a904a8e043bc5011b7963510d
       m_ProfileName: Default
       m_Values:
-      - m_Id: 029fe96682394ec4db9255aed1aefa7a
-        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
-      - m_Id: 2e98cff6117331f4fa2731d8b1dd3cde
-        m_Value: 'ServerData/[BuildTarget]'
-      - m_Id: 42c34505564d4bf4da92b30c2f0863d4
-        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
-      - m_Id: c9be7b42386d44a4fac47c804783b055
-        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
-      - m_Id: f1f65145fcf040b49971b7ff326b833d
+      - m_Id: 07ec47c448f5a224aac0b5d7ffcef216
         m_Value: <undefined>
+      - m_Id: 0e8cc27bd4baea9469b0437f6dfd4e66
+        m_Value: 'ServerData/[BuildTarget]'
+      - m_Id: 36c3209d457bb784b97faf3e03f29bd1
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
+      - m_Id: 72133bdb2d92ba74bb0929cfeb819e09
+        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
+      - m_Id: d61d8845fee6cf14bb3703a544e1df6f
+        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
     m_ProfileEntryNames:
-    - m_Id: 029fe96682394ec4db9255aed1aefa7a
-      m_Name: Local.BuildPath
+    - m_Id: 07ec47c448f5a224aac0b5d7ffcef216
+      m_Name: Remote.LoadPath
       m_InlineUsage: 0
-    - m_Id: 2e98cff6117331f4fa2731d8b1dd3cde
+    - m_Id: 0e8cc27bd4baea9469b0437f6dfd4e66
       m_Name: Remote.BuildPath
       m_InlineUsage: 0
-    - m_Id: 42c34505564d4bf4da92b30c2f0863d4
+    - m_Id: 36c3209d457bb784b97faf3e03f29bd1
+      m_Name: Local.BuildPath
+      m_InlineUsage: 0
+    - m_Id: 72133bdb2d92ba74bb0929cfeb819e09
       m_Name: Local.LoadPath
       m_InlineUsage: 0
-    - m_Id: c9be7b42386d44a4fac47c804783b055
+    - m_Id: d61d8845fee6cf14bb3703a544e1df6f
       m_Name: BuildTarget
-      m_InlineUsage: 0
-    - m_Id: f1f65145fcf040b49971b7ff326b833d
-      m_Name: Remote.LoadPath
       m_InlineUsage: 0
     m_ProfileVersion: 1
   m_LabelTable:
@@ -113,4 +111,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9c005dcbe6544df49bb8a62888bc8825, type: 2}
   - {fileID: 11400000, guid: 618324bd8c565b24a87fc181fdc7be9c, type: 2}
   - {fileID: 11400000, guid: 20152bfc0105e95418ac795e08851610, type: 2}
-  m_ActiveProfileId: 54845362a35095649b62fd0a306b8701
+  m_ActiveProfileId: 048a2f3a904a8e043bc5011b7963510d

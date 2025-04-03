@@ -1,27 +1,53 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ActivateSpawn : MonoBehaviour
 {
-    private Collider2D Player;
+    private Collider2D playerAOE;
     private Collider2D Trigger;
+    public List<GameObject> enemyType;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    void Start()
     {
-        Player = GameObject.FindGameObjectWithTag("Player").GetComponentsInChildren<CircleCollider2D>()[1];
+        playerAOE = Tools.GetChildByName(GameObject.FindGameObjectWithTag("Player").transform, "AOE").GetComponent<CircleCollider2D>();
         Trigger = GetComponent<CircleCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Player != null && Trigger.IsTouching(Player))
+        if (Trigger.IsTouching(playerAOE))
         {
+            CreateEnemies(transform);
             transform.GetChild(0).gameObject.SetActive(false);
             foreach (GameObject enemy in Tools.GetAllChildrenByTag(transform, "Enemy"))
             {
                 enemy.SetActive(true);
             }
             GetComponent<ActivateSpawn>().enabled = false;
+        }
+    }
+
+    void CreateEnemies(Transform targetSpawn)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            GameObject prefab = enemyType[0];
+            GameObject temp = Instantiate(prefab, targetSpawn.position, Quaternion.identity);
+            temp.SetActive(false);
+            GameManager.Instance.WorldSpace.world.gameObjects.Add(new GameObjectData
+            {
+                prefabName = temp.name.Replace("(Clone)", ""),
+                addressableKey = prefab.name,
+                x = temp.transform.position.x,
+                y = temp.transform.position.y,
+                parent = targetSpawn.name.Replace("(Clone)", ""),
+                active = temp.activeSelf
+            });
+            temp.transform.parent = targetSpawn;
+            temp.transform.position += new Vector3((float)0.01 * i, 0, 0);
+            temp.GetComponent<EnemyData>().x = gameObject;
+            temp.GetComponent<EnemyData>().Player = GameManager.Instance.Player.transform;
         }
     }
 }

@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
             }
             if (instance == null)
             {
-                Instantiate(Resources.Load<GameManager>("GameManager"));
+                // Instantiate(Resources.Load<GameManager>("GameManager"));
             }
 #endif
             return instance;

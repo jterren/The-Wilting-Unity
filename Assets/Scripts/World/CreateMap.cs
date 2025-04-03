@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class CreateMap : MonoBehaviour
 {
@@ -25,7 +26,6 @@ public class CreateMap : MonoBehaviour
     private GameObject player;
     public List<GameObject> finishObjects;
     public List<GameObject> spawners;
-    public List<GameObject> enemyType;
     [SerializeField]
     private List<string> wallConflicts = new() { "Player", "Obstacle" };
     void Awake()
@@ -39,6 +39,7 @@ public class CreateMap : MonoBehaviour
     {
         if (GameManager.Instance.WorldSpace.world.gameObjects.Count == 0)
         {
+            Tools.FinishLoading();
             Debug.Log("Generating world...");
             FillGround();
             GenerateMazeBorders();
@@ -160,7 +161,21 @@ public class CreateMap : MonoBehaviour
     private void HuntAndKill()
     {
         FillRegionWithWalls();
-        currentPos = Tools.IsObjectInMaze(player.transform.position, curMaze) ? player.transform.position : curMaze.start;
+        if (player && Tools.IsObjectInMaze(player.transform.position, curMaze))
+        {
+            currentPos = player.transform.position;
+        }
+        else
+        {
+            foreach (Vector2 cell in curMaze.unVisited)
+            {
+                if ((int)cell.x % 2 != 0 && (int)cell.y % 2 != 0)
+                {
+                    currentPos = cell;
+                    break;
+                }
+            }
+        }
 
         while (true)
         {
@@ -229,32 +244,7 @@ public class CreateMap : MonoBehaviour
                     active = temp.activeSelf
                 });
                 temp.transform.parent = spawnerParent.transform;
-                CreateEnemies(temp.transform);
             }
-        }
-    }
-
-    void CreateEnemies(Transform targetSpawn)
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            GameObject prefab = enemyType[0];
-            GameObject temp = Instantiate(prefab, targetSpawn.position, Quaternion.identity);
-            temp.SetActive(false);
-            GameManager.Instance.WorldSpace.world.gameObjects.Add(new GameObjectData
-            {
-                prefabName = temp.name.Replace("(Clone)", ""),
-                addressableKey = prefab.name,
-                x = temp.transform.position.x,
-                y = temp.transform.position.y,
-                parent = targetSpawn.name,
-                active = temp.activeSelf
-            });
-            temp.transform.parent = targetSpawn;
-            temp.transform.position += new Vector3((float)0.01 * i, 0, 0);
-            temp.GetComponent<EnemyData>().x = gameObject;
-            temp.GetComponent<EnemyData>().Player = player.transform;
-
         }
     }
 

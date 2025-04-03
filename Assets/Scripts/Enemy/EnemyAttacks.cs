@@ -14,8 +14,6 @@ public class EnemyAttacks : MonoBehaviour
     private int avgDmg;
     private int maxDmg;
     private int random;
-
-    private Component[] PlayerCompenents;
     public CircleCollider2D PlayerAOE;
     public CircleCollider2D AttackArea;
 
@@ -25,8 +23,7 @@ public class EnemyAttacks : MonoBehaviour
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
-        PlayerCompenents = Player.GetComponentsInChildren<CircleCollider2D>();
-        PlayerAOE = (CircleCollider2D)PlayerCompenents[1];
+        PlayerAOE = Tools.GetChildByName(Player.transform, "AOE").GetComponent<CircleCollider2D>();
 
         DmgLvl = 2;
 
@@ -45,7 +42,7 @@ public class EnemyAttacks : MonoBehaviour
         curDmg = calculateDmg();
         AttackReady = CheckWait();
 
-        if(AttackArea.IsTouching(PlayerAOE) == true)
+        if (AttackArea.IsTouching(PlayerAOE) == true)
         {
             if (AttackReady == true)
             {
@@ -83,7 +80,7 @@ public class EnemyAttacks : MonoBehaviour
             timeBtwAtk = startTimeBtwAtk;
             return true;
         }
-        else if(AttackReady == false)
+        else if (AttackReady == false)
         {
             timeBtwAtk -= Time.deltaTime;
         }

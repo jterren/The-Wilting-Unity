@@ -21,6 +21,8 @@ TagManager:
   - Spawner
   - Generators
   - Quest
+  - UI
+  - Loading
   layers:
   - Default
   - TransparentFX
@@ -60,3 +62,4 @@ TagManager:
     locked: 0
   m_RenderingLayers:
   - Default
+  - Player

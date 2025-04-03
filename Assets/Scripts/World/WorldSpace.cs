@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ public class WorldSpace : MonoBehaviour
 {
     public PlayerStats Player;
     public WorldData world = new();
-    private List<GameObject> prefabs;
+    public List<Task<GameObject>> instantiationTasks = new();
 
     private void Awake()
     {
@@ -16,46 +17,40 @@ public class WorldSpace : MonoBehaviour
         if (GameManager.Instance.WorldSpace == null) GameManager.Instance.WorldSpace = this;
     }
 
-    private async void Start()
+    public async Task LoadWorldObjectsAsync()
     {
-        Dictionary<string, GameObject> prefabsDict = await Tools.LoadPrefabsAsync(world.gameObjects.Select(go => go.addressableKey).Distinct().ToList());
-
-        if (GameManager.Instance.WorldSpace.world.gameObjects.Count != 0)
+        try
         {
-            foreach (GameObjectData obj in world.gameObjects)
+            var keys = world.gameObjects.Select(go => go.addressableKey).Distinct().ToList();
+            Dictionary<string, GameObject> prefabsDict = await Tools.LoadPrefabsAsync(keys);
+            Tools.FinishLoading();
+            if (world.gameObjects.Count != 0)
             {
-                if (prefabsDict.TryGetValue(obj.prefabName, out GameObject prefab))
+                foreach (GameObjectData obj in world.gameObjects)
                 {
-                    if (!Tools.GetAllObjectsInScene().Any(p => p.name == obj.prefabName))
+                    if (prefabsDict.TryGetValue(obj.addressableKey, out GameObject prefab))
                     {
-                        GameObject temp = Instantiate(prefab, new Vector2(obj.x, obj.y), Quaternion.identity);
-                        temp.SetActive(obj.active);
-                        temp.transform.parent = GameObject.Find(obj.parent).transform;
+                        if (!Tools.GetAllObjectsInScene().Any(p => p.name == obj.prefabName))
+                        {
+                            GameObject temp = Instantiate(prefab, new Vector2(obj.x, obj.y), Quaternion.identity);
+                            temp.SetActive(obj.active);
+                            GameObject parent = GameObject.Find(obj.parent);
+                            if (parent) temp.transform.parent = parent.transform;
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"Prefab not found for key: {obj.addressableKey}");
                     }
                 }
-                else
-                {
-                    Debug.LogWarning($"Prefab not found for: {obj.prefabName}");
-                }
+
             }
         }
-    }
-
-
-    private WorldData GetWorld()
-    {
-
-        foreach (GameObject obj in Tools.GetAllChildren(GameObject.Find("Maze").transform))
+        catch (Exception err)
         {
-            GameObjectData objData = new()
-            {
-                prefabName = obj.name.Replace("(Clone)", ""),
-                x = obj.transform.position.x,
-                y = obj.transform.position.y,
-            };
-            world.gameObjects.Add(objData);
+            if (err != null)
+                Debug.Log("Error occured" + err.ToString());
         }
-        return world;
     }
 
     public void Save(ref WorldSaveData data)

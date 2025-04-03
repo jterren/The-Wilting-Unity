@@ -2,15 +2,25 @@ using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LoadMenu : MonoBehaviour
 {
     private string[] FoundFiles;
     public GameObject SaveTile;
+    public GameObject LoadingScreen;
+    public void Start()
+    {
+        LoadingScreen = Tools.FindGameObjectByName("Loading");
+    }
     public void LoadGame()
     {
-        if (GameManager.Instance.SelectedSave != null) SaveSystem.LoadAsync(FoundFiles.FirstOrDefault(x => x.Contains(GameManager.Instance.SelectedSave)));
+        GameObject player = Tools.FindGameObjectByName("Player");
+        if (GameManager.Instance.SelectedSave != null)
+        {
+            if (player != null) ; player.SetActive(false);
+            ActivateLoading();
+            SaveSystem.LoadAsync(FoundFiles.FirstOrDefault(x => x.Contains(GameManager.Instance.SelectedSave)));
+        }
     }
 
     void Awake()
@@ -21,5 +31,11 @@ public class LoadMenu : MonoBehaviour
         {
             Instantiate(SaveTile, container, false).GetComponentInChildren<TextMeshProUGUI>().text = file.Split('/')[^1].Replace(".sav", "");
         }
+    }
+
+    public void ActivateLoading()
+    {
+        gameObject.transform.parent.gameObject.SetActive(false);
+        LoadingScreen.SetActive(true); ;
     }
 }

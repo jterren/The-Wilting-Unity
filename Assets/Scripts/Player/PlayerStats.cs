@@ -20,9 +20,11 @@ public class PlayerStats : MonoBehaviour
     private int random;
     public HealthBar healthbar;
 
+    public KillUI killCounter;
+
     private void Awake()
     {
-        GameManager.Instance.Player = this;
+        // GameManager.Instance.Player = this;
     }
 
     // Use this for initialization
@@ -39,7 +41,6 @@ public class PlayerStats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        curKills = GameObject.FindGameObjectWithTag("KillUI").GetComponent<KillUI>().KillCount;
         healthbar.SetHealth((int)(curHealth / maxHealth * 100));
 
         // if (curHealth <= 0)

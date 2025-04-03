@@ -53,6 +53,7 @@ public static class SaveSystem
         await GameManager.Instance.Scene.LoadAsync(_saveData.SceneData);
         await GameManager.Instance.Scene.WaitForSceneLoad();
         GameManager.Instance.WorldSpace.Load(_saveData.WorldData);
+        await GameManager.Instance.WorldSpace.LoadWorldObjectsAsync();
         GameManager.Instance.Player.Load(_saveData.PlayerData);
         Time.timeScale = 1;
     }

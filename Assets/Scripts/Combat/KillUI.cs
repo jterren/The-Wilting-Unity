@@ -1,29 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 
 public class KillUI : MonoBehaviour
 {
-  public GameObject Player;
-  public int KillCount;
-
   // Start is called before the first frame update
   void Start()
   {
-    Player = GameObject.FindWithTag("Player");
-    this.GetComponent<Text>().text = KillCount.ToString();
+    // GetComponent<Text>().text = $"{GameManager.Instance.Player.curKills}";
   }
 
   // Update is called once per frame
   void Update()
   {
-    this.GetComponent<Text>().text = KillCount.ToString();
+    // GetComponent<Text>().text = $"{GameManager.Instance.Player.curKills}";
   }
 
-  public void AddKills(int x)
-  {
-    KillCount += x;
-  }
 }

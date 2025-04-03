@@ -34,7 +34,7 @@ public class EnemyData : MonoBehaviour
         {
             aggro = false;
             // x.GetComponent<Rounds>().enemyCounter -= 1;
-            GameObject.FindGameObjectWithTag("KillUI").GetComponent<KillUI>().AddKills(1);
+            // GameManager.Instance.Player.curKills += 1;
             Destroy(gameObject);
         }
 

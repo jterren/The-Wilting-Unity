@@ -1,18 +1,25 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public GameObject LoadingScreen;
+    public void Start()
+    {
+        LoadingScreen = Tools.FindGameObjectByName("Loading");
+    }
     public void Resume()
     {
         SaveSystem.Resume();
-        this.gameObject.SetActive(false);
+        ActivateLoading();
     }
     public void NewGame()
     {
         SceneManager.LoadScene(2);
-        this.gameObject.SetActive(false);
+        ActivateLoading();
     }
+
 
     public void Settings()
     {
@@ -22,5 +29,11 @@ public class MainMenu : MonoBehaviour
     public void ExitDesktop()
     {
         Application.Quit();
+    }
+
+    public void ActivateLoading()
+    {
+        gameObject.transform.parent.gameObject.SetActive(false);
+        LoadingScreen.SetActive(true); ;
     }
 }

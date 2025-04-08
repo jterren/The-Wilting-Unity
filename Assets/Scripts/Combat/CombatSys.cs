@@ -21,7 +21,6 @@ public class CombatSys : MonoBehaviour
         damage = GetComponent<PlayerStats>().curDmg;
         enemyFilter.SetLayerMask(LayerMask.GetMask("Enemy"));
         enemyFilter.useLayerMask = true;
-        enemyFilter.useTriggers = true;
     }
 
     void Update()
@@ -69,7 +68,11 @@ public class CombatSys : MonoBehaviour
         damage = GetComponent<PlayerStats>().curDmg;
         foreach (GameObject target in targets)
         {
-            target.GetComponent<EnemyData>().TakeDamage(damage / targets.Count());
+            EnemyData temp = target.GetComponent<EnemyData>();
+            if (temp)
+            {
+                temp.TakeDamage(damage);
+            }
         }
     }
 }

@@ -48,15 +48,13 @@ public class WorldSpace : MonoBehaviour
         }
         catch (Exception err)
         {
-            if (err != null)
-                Debug.Log("Error occured" + err.ToString());
+            Debug.LogError(err.ToString());
         }
     }
 
     public void Save(ref WorldSaveData data)
     {
         data.world = world;
-        Debug.Log("World Saved!");
     }
 
     public void Load(WorldSaveData data)

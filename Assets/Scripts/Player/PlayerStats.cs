@@ -80,15 +80,14 @@ public class PlayerStats : MonoBehaviour
            }
        }*/
 
-    public void takeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         curHealth -= damage;
     }
 
     void PlayerDie()
     {
-        //Debug.Log(pData.PlayerKills.ToString());
-        this.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void Save(ref PlayerSaveData data)

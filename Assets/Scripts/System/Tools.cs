@@ -120,7 +120,6 @@ public class Tools : MonoBehaviour
         {
             return renderer.bounds.extents.magnitude;
         }
-        Debug.Log("Bounds not found.");
         return 10f;
     }
 

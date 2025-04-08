@@ -15,7 +15,6 @@ public class ChestEndGame : MonoBehaviour
              // GetComponent<CircleCollider2D>().IsTouchingLayers(9) &&
              Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("Ending Game");
             Tools.CompleteGame();
         }
     }

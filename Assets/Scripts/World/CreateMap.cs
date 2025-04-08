@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
 
 public class CreateMap : MonoBehaviour
 {
@@ -28,11 +27,13 @@ public class CreateMap : MonoBehaviour
     public List<GameObject> spawners;
     [SerializeField]
     private List<string> wallConflicts = new() { "Player", "Obstacle" };
+    private LayerMask obstacleLayer;
     void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = Tools.FindGameObjectByName("Player");
         algos.Add(() => HuntAndKill);
         nextPos = new(-borderWidth, -borderWidth);
+        obstacleLayer = LayerMask.GetMask("Obstacle");
     }
 
     void Start()
@@ -40,7 +41,6 @@ public class CreateMap : MonoBehaviour
         if (GameManager.Instance.WorldSpace.world.gameObjects.Count == 0)
         {
             Tools.FinishLoading();
-            Debug.Log("Generating world...");
             FillGround();
             GenerateMazeBorders();
             CreateMazes();
@@ -72,13 +72,13 @@ public class CreateMap : MonoBehaviour
 
         for (int y = -borderWidth; y < 0; y++) //Generate x borders
         {
-            CreateXWall(-borderWidth, y, length + borderWidth, false);
-            CreateXWall(-borderWidth, length - y, length + borderWidth, false);
+            CreateHorizontalWall(-borderWidth, y, length + borderWidth, false);
+            CreateHorizontalWall(-borderWidth, length - y, length + borderWidth, false);
         }
         for (int x = -borderWidth; x < 0; x++) //Genereate y borders
         {
-            CreateYWall(x, -borderWidth, length + borderWidth, false);
-            CreateYWall(length - x, -borderWidth, length + borderWidth, false);
+            CreateVerticalWall(x, -borderWidth, length + borderWidth, false);
+            CreateVerticalWall(length - x, -borderWidth, length + borderWidth, false);
         }
     }
 
@@ -100,19 +100,17 @@ public class CreateMap : MonoBehaviour
         foreach (Maze current in mazes)
         {
             curMaze = current;
-            CreateXWall(current.start.x, current.start.y, (int)current.start.x + current.length, true);
-            CreateYWall(current.start.x, current.start.y, (int)current.start.y + current.length, true);
-            CreateXWall(current.start.x, (int)current.start.y + current.length, (int)current.start.x + current.length, true);
-            CreateYWall((int)current.start.x + current.length, current.start.y, (int)current.start.y + current.length, true);
+            CreateHorizontalWall(current.start.x, (int)current.start.y + current.length, (int)current.start.x + current.length, true);
+            CreateVerticalWall((int)current.start.x + current.length, current.start.y, (int)current.start.y + current.length, true);
             curMaze.algorithm().Invoke();
         }
     }
 
-    private void CreateXWall(float startX, float y, int length, bool permanant)
+    private void CreateHorizontalWall(float startX, float y, int length, bool permanant)
     {
         GameObject temp;
 
-        for (float x = startX + 1; x < length; x++)
+        for (float x = startX; x < length; x++)
         {
             Vector2 pos = new(x, y);
             if (!Tools.CollidingSpawnByLayer(pos, wallConflicts))
@@ -133,7 +131,7 @@ public class CreateMap : MonoBehaviour
             }
         }
     }
-    private void CreateYWall(float x, float startY, int length, bool permanant)
+    private void CreateVerticalWall(float x, float startY, int length, bool permanant)
     {
         GameObject temp;
         for (float y = startY; y <= length; y++)
@@ -161,20 +159,13 @@ public class CreateMap : MonoBehaviour
     private void HuntAndKill()
     {
         FillRegionWithWalls();
-        if (player && Tools.IsObjectInMaze(player.transform.position, curMaze))
+        if (Tools.IsObjectInMaze(player.transform.position, curMaze))
         {
             currentPos = player.transform.position;
         }
         else
         {
-            foreach (Vector2 cell in curMaze.unVisited)
-            {
-                if ((int)cell.x % 2 != 0 && (int)cell.y % 2 != 0)
-                {
-                    currentPos = cell;
-                    break;
-                }
-            }
+            currentPos = curMaze.start;
         }
 
         while (true)
@@ -199,53 +190,60 @@ public class CreateMap : MonoBehaviour
 
     private void ReplaceWithPathTile(Vector2 pos)
     {
-        Collider2D obstacle = Physics2D.OverlapPoint(pos);
-        if (obstacle != null && !obstacle.CompareTag("Player") && !curMaze.borders.Contains(obstacle.transform.position))
+        try
         {
-            int index = GameManager.Instance.WorldSpace.world.gameObjects.FindIndex(go =>
-                go.prefabName == obstacle.name.Replace("(Clone)", "") &&
-                Mathf.Approximately(go.x, obstacle.transform.position.x) &&
-                Mathf.Approximately(go.y, obstacle.transform.position.y));
-
-            if (index != -1)
+            Collider2D obstacle = Physics2D.OverlapPoint(pos, obstacleLayer);
+            if (obstacle != null && obstacle.CompareTag("Obstacle") && !curMaze.borders.Contains(obstacle.transform.position))
             {
-                GameManager.Instance.WorldSpace.world.gameObjects.RemoveAt(index);
-            }
-
-            Destroy(obstacle.gameObject);
-            if (curMaze.finish == Vector2.zero && UnityEngine.Random.Range(0, 100) == 69)
-            {
-                curMaze.finish = pos;
-                GameObject prefab = finishObjects[UnityEngine.Random.Range(0, finishObjects.Count)];
-                GameObject temp = Instantiate(prefab, pos, Quaternion.identity);
-                GameManager.Instance.WorldSpace.world.gameObjects.Add(new GameObjectData
+                int index = GameManager.Instance.WorldSpace.world.gameObjects.FindIndex(go =>
+                    go.prefabName == obstacle.name.Replace("(Clone)", "") &&
+                    Mathf.Approximately(go.x, obstacle.transform.position.x) &&
+                    Mathf.Approximately(go.y, obstacle.transform.position.y));
+                if (index != -1)
                 {
-                    prefabName = temp.name.Replace("(Clone)", ""),
-                    addressableKey = prefab.name,
-                    x = temp.transform.position.x,
-                    y = temp.transform.position.y,
-                    parent = name,
-                    active = temp.activeSelf
-                });
-                temp.transform.parent = transform;
-            }
+                    GameManager.Instance.WorldSpace.world.gameObjects.RemoveAt(index);
+                }
 
-            if (UnityEngine.Random.Range(0, 100) % 10 == 0)
-            {
-                GameObject prefab = spawners[UnityEngine.Random.Range(0, spawners.Count)];
-                GameObject temp = Instantiate(prefab, pos, Quaternion.identity);
-                GameManager.Instance.WorldSpace.world.gameObjects.Add(new GameObjectData
+                Destroy(obstacle.gameObject);
+                if (curMaze.finish == Vector2.zero && UnityEngine.Random.Range(0, 100) == 69)
                 {
-                    prefabName = temp.name.Replace("(Clone)", ""),
-                    addressableKey = prefab.name,
-                    x = temp.transform.position.x,
-                    y = temp.transform.position.y,
-                    parent = spawnerParent.name,
-                    active = temp.activeSelf
-                });
-                temp.transform.parent = spawnerParent.transform;
+                    curMaze.finish = pos;
+                    GameObject prefab = finishObjects[UnityEngine.Random.Range(0, finishObjects.Count)];
+                    GameObject temp = Instantiate(prefab, pos, Quaternion.identity);
+                    GameManager.Instance.WorldSpace.world.gameObjects.Add(new GameObjectData
+                    {
+                        prefabName = temp.name.Replace("(Clone)", ""),
+                        addressableKey = prefab.name,
+                        x = temp.transform.position.x,
+                        y = temp.transform.position.y,
+                        parent = name,
+                        active = temp.activeSelf
+                    });
+                    temp.transform.parent = transform;
+                }
+
+                if (UnityEngine.Random.Range(0, 100) % 10 == 0)
+                {
+                    GameObject prefab = spawners[UnityEngine.Random.Range(0, spawners.Count)];
+                    GameObject temp = Instantiate(prefab, pos, Quaternion.identity);
+                    GameManager.Instance.WorldSpace.world.gameObjects.Add(new GameObjectData
+                    {
+                        prefabName = temp.name.Replace("(Clone)", ""),
+                        addressableKey = prefab.name,
+                        x = temp.transform.position.x,
+                        y = temp.transform.position.y,
+                        parent = spawnerParent.name,
+                        active = temp.activeSelf
+                    });
+                    temp.transform.parent = spawnerParent.transform;
+                }
             }
         }
+        catch (Exception err)
+        {
+            Debug.LogError(err.Message);
+        }
+
     }
 
     private void FillRegionWithWalls()
@@ -256,7 +254,7 @@ public class CreateMap : MonoBehaviour
 
         do
         {
-            if (Physics2D.OverlapCircle(nextPos, 0.5f) == null && !curMaze.borders.Contains(nextPos)) // Adjust radius as needed
+            if (Physics2D.OverlapCircle(nextPos, 0.25f) == null && !curMaze.borders.Contains(nextPos)) // Adjust radius as needed
             {
                 GameObject prefab = wallTiles[UnityEngine.Random.Range(0, wallTiles.Count)];
                 GameObject temp = Instantiate(prefab, nextPos, Quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 4) * 90));
@@ -314,7 +312,7 @@ public class CreateMap : MonoBehaviour
         }
         catch (Exception err)
         {
-            Debug.Log(err);
+            Debug.LogError(err);
             next = Vector2.zero;
             return false;
         }
@@ -327,9 +325,9 @@ public class CreateMap : MonoBehaviour
         float minY = curMaze.start.y;
         float maxX = curMaze.start.x + length;
         float maxY = curMaze.start.y + length;
-        for (float y = minY + 1; y < maxY - 1; y += 2)
+        for (float y = minY; y < maxY; y += 2)
         {
-            for (float x = minX + 1; x < maxX - 1; x += 2)
+            for (float x = minX; x < maxX; x += 2)
             {
                 Vector2 pos = new(x, y);
                 if (!curMaze.visited.Contains(pos) && HasVisitedNeighbor(pos, out Vector2 neighbor))

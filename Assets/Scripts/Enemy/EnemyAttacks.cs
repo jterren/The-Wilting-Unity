@@ -24,7 +24,7 @@ public class EnemyAttacks : MonoBehaviour
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         PlayerAOE = Tools.GetChildByName(Player.transform, "AOE").GetComponent<CircleCollider2D>();
-
+        AttackArea = GetComponent<CircleCollider2D>();
         DmgLvl = 2;
 
         minDmg = DmgLvl / 2;
@@ -46,7 +46,7 @@ public class EnemyAttacks : MonoBehaviour
         {
             if (AttackReady == true)
             {
-                Player.GetComponent<PlayerStats>().takeDamage(curDmg);
+                Player.GetComponent<PlayerStats>().TakeDamage(curDmg);
             }
         }
     }

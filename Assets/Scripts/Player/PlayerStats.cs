@@ -24,7 +24,7 @@ public class PlayerStats : MonoBehaviour
 
     private void Awake()
     {
-        // GameManager.Instance.Player = this;
+        GameManager.Instance.Player = this;
     }
 
     // Use this for initialization
@@ -34,7 +34,6 @@ public class PlayerStats : MonoBehaviour
         avgDmg = DmgLvl;
         maxDmg = DmgLvl * 2;
         random = UnityEngine.Random.Range(1, 9);
-
         healthbar.SetMaxHealth(maxHealth);
     }
 
@@ -43,10 +42,10 @@ public class PlayerStats : MonoBehaviour
     {
         healthbar.SetHealth((int)(curHealth / maxHealth * 100));
 
-        // if (curHealth <= 0)
-        // {
-        //     PlayerDie();
-        // }
+        if (curHealth <= 0)
+        {
+            PlayerDie();
+        }
 
         if (random < 3)
         {
@@ -88,6 +87,7 @@ public class PlayerStats : MonoBehaviour
     void PlayerDie()
     {
         gameObject.SetActive(false);
+        Tools.CompleteGame();
     }
 
     public void Save(ref PlayerSaveData data)
@@ -96,6 +96,7 @@ public class PlayerStats : MonoBehaviour
         data.playerCash = curCash;
         data.playerDmg = DmgLvl;
         data.playerHealth = curHealth;
+        data.playerKills = curKills;
     }
 
     public void Load(PlayerSaveData data)
@@ -104,6 +105,7 @@ public class PlayerStats : MonoBehaviour
         curCash = data.playerCash;
         curDmg = data.playerDmg;
         curHealth = data.playerHealth;
+        curKills = data.playerKills;
     }
 
 }
@@ -115,4 +117,5 @@ public struct PlayerSaveData
     public int playerCash;
     public int playerDmg;
     public double playerHealth;
+    public int playerKills;
 }

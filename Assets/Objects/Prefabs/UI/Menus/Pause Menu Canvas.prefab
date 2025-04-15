@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 2732834556414475123}
   m_Layer: 5
   m_Name: Pause Menu Canvas
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -270,6 +270,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Settings
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413573156117420334, guid: 2279234ff30b1f34ba97715bdb3f7c4b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -718,7 +723,7 @@ PrefabInstance:
     - target: {fileID: 7910494891599565949, guid: d420ebf5b9d57d246877da69e1ce8801,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -100
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 7910494891599565949, guid: d420ebf5b9d57d246877da69e1ce8801,
         type: 3}
@@ -758,6 +763,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ExitDesktop
+      objectReference: {fileID: 0}
+    - target: {fileID: 769119783556943441, guid: 143269e8a9b06b1439527daec03fc6f2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5013270869755972201, guid: 143269e8a9b06b1439527daec03fc6f2,
         type: 3}
@@ -918,6 +928,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 384293754788645517}
     m_Modifications:
+    - target: {fileID: 2192766749241093534, guid: 91d65513b005b4b4394a1bc4389182ef,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 4466877945295630526}
     - target: {fileID: 3358350295997724161, guid: 91d65513b005b4b4394a1bc4389182ef,
         type: 3}
       propertyPath: m_Pivot.x

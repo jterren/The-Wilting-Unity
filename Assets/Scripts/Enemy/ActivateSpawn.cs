@@ -16,7 +16,7 @@ public class ActivateSpawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Trigger.IsTouching(playerAOE))
+        if (playerAOE && Trigger.IsTouching(playerAOE))
         {
             CreateEnemies(transform);
             transform.GetChild(0).gameObject.SetActive(false);
@@ -25,6 +25,10 @@ public class ActivateSpawn : MonoBehaviour
                 enemy.SetActive(true);
             }
             GetComponent<ActivateSpawn>().enabled = false;
+        }
+        else if (!playerAOE)
+        {
+            playerAOE = Tools.GetChildByName(GameObject.FindGameObjectWithTag("Player").transform, "AOE").GetComponent<CircleCollider2D>();
         }
     }
 
@@ -35,19 +39,11 @@ public class ActivateSpawn : MonoBehaviour
             GameObject prefab = enemyType[0];
             GameObject temp = Instantiate(prefab, targetSpawn.position, Quaternion.identity);
             temp.SetActive(false);
-            GameManager.Instance.WorldSpace.world.gameObjects.Add(new GameObjectData
-            {
-                prefabName = temp.name.Replace("(Clone)", ""),
-                addressableKey = prefab.name,
-                x = temp.transform.position.x,
-                y = temp.transform.position.y,
-                parent = targetSpawn.name.Replace("(Clone)", ""),
-                active = temp.activeSelf
-            });
             temp.transform.parent = targetSpawn;
             temp.transform.position += new Vector3((float)0.01 * i, 0, 0);
             temp.GetComponent<EnemyData>().x = gameObject;
             temp.GetComponent<EnemyData>().Player = GameManager.Instance.Player.transform;
+            Tools.CaptureObject(temp, prefab.name);
         }
     }
 }

@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class CreateMap : MonoBehaviour
 {
@@ -41,32 +44,10 @@ public class CreateMap : MonoBehaviour
         if (GameManager.Instance.WorldSpace.world.gameObjects.Count == 0)
         {
             Tools.FinishLoading();
-            FillGround();
             GenerateMazeBorders();
             CreateMazes();
         }
     }
-
-    private void FillGround()
-    {
-        do
-        {
-            GameObject prefab = groundTiles[UnityEngine.Random.Range(0, groundTiles.Count)];
-            GameObject temp = Instantiate(prefab, nextPos, Quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 4) * 90));
-            GameManager.Instance.WorldSpace.world.gameObjects.Add(new GameObjectData()
-            {
-                prefabName = temp.name.Replace("(Clone)", ""),
-                addressableKey = prefab.name,
-                x = temp.transform.position.x,
-                y = temp.transform.position.y,
-                parent = groundParent.name,
-                active = temp.activeSelf
-            });
-            temp.transform.parent = groundParent.transform;
-            nextPos = nextPos.x >= length ? new Vector2(-borderWidth, nextPos.y + 1) : new Vector2(nextPos.x + 1, nextPos.y);
-        } while (nextPos.y <= length);
-    }
-
     private void GenerateMazeBorders()
     {
 
@@ -117,16 +98,8 @@ public class CreateMap : MonoBehaviour
             {
                 GameObject prefab = wallTiles[UnityEngine.Random.Range(0, wallTiles.Count)];
                 temp = Instantiate(prefab, pos, Quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 4) * 90));
-                GameManager.Instance.WorldSpace.world.gameObjects.Add(new GameObjectData
-                {
-                    prefabName = temp.name.Replace("(Clone)", ""),
-                    addressableKey = prefab.name,
-                    x = temp.transform.position.x,
-                    y = temp.transform.position.y,
-                    parent = wallParent.name,
-                    active = temp.activeSelf,
-                });
                 temp.transform.parent = wallParent.transform;
+                Tools.CaptureObject(temp, prefab.name);
                 if (permanant) curMaze.borders.Add(temp.transform.position);
             }
         }
@@ -141,16 +114,8 @@ public class CreateMap : MonoBehaviour
             {
                 GameObject prefab = wallTiles[UnityEngine.Random.Range(0, wallTiles.Count)];
                 temp = Instantiate(prefab, pos, Quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 4) * 90));
-                GameManager.Instance.WorldSpace.world.gameObjects.Add(new GameObjectData
-                {
-                    prefabName = temp.name.Replace("(Clone)", ""),
-                    addressableKey = prefab.name,
-                    x = temp.transform.position.x,
-                    y = temp.transform.position.y,
-                    parent = wallParent.name,
-                    active = temp.activeSelf
-                });
                 temp.transform.parent = wallParent.transform;
+                Tools.CaptureObject(temp, prefab.name);
                 if (permanant) curMaze.borders.Add(temp.transform.position);
             }
         }
@@ -183,6 +148,14 @@ public class CreateMap : MonoBehaviour
             }
             else if (!FindNextStart() || curMaze.unVisited.Count == 0)
             {
+                if (curMaze.finish == Vector2.zero)
+                {
+                    curMaze.finish = curMaze.visited.ElementAt(UnityEngine.Random.Range(0, curMaze.visited.Count));
+                    GameObject prefab = finishObjects[UnityEngine.Random.Range(0, finishObjects.Count)];
+                    GameObject temp = Instantiate(prefab, curMaze.finish, Quaternion.identity);
+                    temp.transform.parent = transform;
+                    Tools.CaptureObject(temp, prefab.name);
+                }
                 break;
             }
         }
@@ -195,53 +168,31 @@ public class CreateMap : MonoBehaviour
             Collider2D obstacle = Physics2D.OverlapPoint(pos, obstacleLayer);
             if (obstacle != null && obstacle.CompareTag("Obstacle") && !curMaze.borders.Contains(obstacle.transform.position))
             {
-                int index = GameManager.Instance.WorldSpace.world.gameObjects.FindIndex(go =>
-                    go.prefabName == obstacle.name.Replace("(Clone)", "") &&
+                int index = GameManager.Instance.WorldSpace.world.gameObjects.First(x => x.addressableKey == obstacle.name.Replace("(Clone)", "")).instances.FindIndex(go =>
                     Mathf.Approximately(go.x, obstacle.transform.position.x) &&
                     Mathf.Approximately(go.y, obstacle.transform.position.y));
                 if (index != -1)
                 {
-                    GameManager.Instance.WorldSpace.world.gameObjects.RemoveAt(index);
-                }
-
-                Destroy(obstacle.gameObject);
-                if (curMaze.finish == Vector2.zero && UnityEngine.Random.Range(0, 100) == 69)
-                {
-                    curMaze.finish = pos;
-                    GameObject prefab = finishObjects[UnityEngine.Random.Range(0, finishObjects.Count)];
-                    GameObject temp = Instantiate(prefab, pos, Quaternion.identity);
-                    GameManager.Instance.WorldSpace.world.gameObjects.Add(new GameObjectData
-                    {
-                        prefabName = temp.name.Replace("(Clone)", ""),
-                        addressableKey = prefab.name,
-                        x = temp.transform.position.x,
-                        y = temp.transform.position.y,
-                        parent = name,
-                        active = temp.activeSelf
-                    });
-                    temp.transform.parent = transform;
+                    GameManager.Instance.WorldSpace.world.gameObjects.First(x => x.addressableKey == obstacle.name.Replace("(Clone)", "")).instances.RemoveAt(index);
+                    GameObject prefab = groundTiles[UnityEngine.Random.Range(0, groundTiles.Count)];
+                    GameObject temp = Instantiate(prefab, obstacle.transform.position, Quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 4) * 90));
+                    temp.transform.parent = groundParent.transform;
+                    Tools.CaptureObject(temp, prefab.name);
+                    Destroy(obstacle.gameObject);
                 }
 
                 if (UnityEngine.Random.Range(0, 100) % 10 == 0)
                 {
                     GameObject prefab = spawners[UnityEngine.Random.Range(0, spawners.Count)];
                     GameObject temp = Instantiate(prefab, pos, Quaternion.identity);
-                    GameManager.Instance.WorldSpace.world.gameObjects.Add(new GameObjectData
-                    {
-                        prefabName = temp.name.Replace("(Clone)", ""),
-                        addressableKey = prefab.name,
-                        x = temp.transform.position.x,
-                        y = temp.transform.position.y,
-                        parent = spawnerParent.name,
-                        active = temp.activeSelf
-                    });
                     temp.transform.parent = spawnerParent.transform;
+                    Tools.CaptureObject(temp, prefab.name);
                 }
             }
         }
         catch (Exception err)
         {
-            Debug.LogError(err.Message);
+            Debug.LogError(err);
         }
 
     }
@@ -258,16 +209,8 @@ public class CreateMap : MonoBehaviour
             {
                 GameObject prefab = wallTiles[UnityEngine.Random.Range(0, wallTiles.Count)];
                 GameObject temp = Instantiate(prefab, nextPos, Quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 4) * 90));
-                GameManager.Instance.WorldSpace.world.gameObjects.Add(new GameObjectData
-                {
-                    prefabName = temp.name.Replace("(Clone)", ""),
-                    addressableKey = prefab.name,
-                    x = temp.transform.position.x,
-                    y = temp.transform.position.y,
-                    parent = wallParent.name,
-                    active = temp.activeSelf
-                });
                 temp.transform.parent = wallParent.transform;
+                Tools.CaptureObject(temp, prefab.name);
                 curMaze.unVisited.Add(nextPos);
             }
             nextPos = nextPos.x >= xLength - 1 ? new Vector2(curMaze.start.x, nextPos.y + 1) : new Vector2(nextPos.x + 1, nextPos.y);

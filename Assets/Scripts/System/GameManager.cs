@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+        else if (Tools.FindGameObjectByName("GameManager")) Destroy(gameObject);
     }
 
     void Start()
@@ -36,7 +37,7 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()

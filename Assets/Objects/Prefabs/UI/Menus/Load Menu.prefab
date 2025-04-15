@@ -833,8 +833,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5ef2dcac191de840a49bab9cea2d8c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SaveTile: {fileID: 3793897809930791275, guid: 60048ecbc1dbddb46aa3988cf6bbdca7,
+  saveTile: {fileID: 3793897809930791275, guid: 60048ecbc1dbddb46aa3988cf6bbdca7,
     type: 3}
+  loadingScreen: {fileID: 0}
 --- !u!1 &5115137300186010792
 GameObject:
   m_ObjectHideFlags: 0

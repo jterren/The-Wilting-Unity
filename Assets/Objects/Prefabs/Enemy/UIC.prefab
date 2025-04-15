@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3858246433003793442}
   - component: {fileID: 114644522662749032}
   - component: {fileID: 5307873283193119642}
+  - component: {fileID: 2496392801325817240}
   m_Layer: 8
   m_Name: UIC
   m_TagString: Enemy
@@ -79,9 +80,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: 1551706789
+  m_SortingLayer: 3
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5b23a3e34ea96b0448eb27d94000d94e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -218,6 +219,24 @@ MonoBehaviour:
   PlayerAOE: {fileID: 0}
   AttackArea: {fileID: 0}
   Player: {fileID: 4316663718750042892, guid: cd681b6362a3018409dd1aabe8b30cbd, type: 3}
+--- !u!114 &2496392801325817240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3858246433003793443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71999833f9addd64dbb2f0332fe20864, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  resolver: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  baseLayer: 5
+  layerChange: 1
+  prefix: 
 --- !u!1 &7741231974357358391
 GameObject:
   m_ObjectHideFlags: 0

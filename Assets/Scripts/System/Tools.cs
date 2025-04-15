@@ -4,7 +4,9 @@ using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using System.Runtime.Serialization.Formatters;
+using System.Linq;
+using System;
+using System.ComponentModel.Design.Serialization;
 
 public class Tools : MonoBehaviour
 {
@@ -131,7 +133,7 @@ public class Tools : MonoBehaviour
 
     public static void CompleteGame()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("GameOver");
     }
 
     public static List<GameObject> GetAllObjectsInScene()
@@ -200,12 +202,36 @@ public class Tools : MonoBehaviour
 
     public static void FinishLoading()
     {
-        GameObject player = FindGameObjectByName("Player");
+
         GameObject loading = FindGameObjectByName("Loading");
-        GameObject background = FindGameObjectByName("MazeBackground");
         FindInactiveGameObjectsByTag("UI").ForEach(obj => { if (!obj.activeInHierarchy) obj.SetActive(true); });
         if (loading != null && loading.activeInHierarchy) loading.SetActive(false);
-        if (background != null && background.activeInHierarchy) background.SetActive(false);
+        GameObject player = FindGameObjectByName("Player");
         if (player != null && !player.activeInHierarchy) player.SetActive(true);
+    }
+
+    public static void CaptureObject(GameObject temp, string addressableKey)
+    {
+        try
+        {
+            Prefab addressable = GameManager.Instance.WorldSpace.world.gameObjects.FirstOrDefault(x => x.addressableKey == addressableKey);
+            if (addressable == null)
+            {
+                GameManager.Instance.WorldSpace.world.gameObjects.Add(new Prefab
+                {
+                    addressableKey = addressableKey,
+                    parent = temp.transform.parent.name,
+                    active = temp.activeSelf,
+                    instances = new List<Vector2>()
+                });
+            }
+
+            GameManager.Instance.WorldSpace.world.gameObjects.First(x => x.addressableKey == addressableKey).instances.Add(new Vector2(temp.transform.position.x, temp.transform.position.y));
+        }
+        catch (Exception err)
+        {
+            Debug.LogError(err);
+        }
+
     }
 }

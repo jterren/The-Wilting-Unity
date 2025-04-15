@@ -16,10 +16,6 @@ public class EnemyData : MonoBehaviour
     public GameObject x;
     public GameObject UI;
     private Vector3 direction;
-    public int baseLayer;
-    private int defaultLayer;
-    public bool layerChange;
-    private SpriteRenderer spriteRenderer;
 
     // Start is called before the first frame update
     void Start()
@@ -27,8 +23,6 @@ public class EnemyData : MonoBehaviour
         rb = this.GetComponent<Rigidbody2D>();
         aggro = false;
         Player = GameObject.FindGameObjectWithTag("Player").transform;
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        defaultLayer = spriteRenderer.sortingOrder;
     }
 
     // Update is called once per frame
@@ -36,6 +30,7 @@ public class EnemyData : MonoBehaviour
     {
         if (health <= 0)
         {
+            GameManager.Instance.Player.curKills += 1;
             aggro = false;
             Destroy(gameObject);
         }
@@ -55,14 +50,6 @@ public class EnemyData : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (transform.position.y < Player.position.y)
-        {
-            if (layerChange) spriteRenderer.sortingOrder = defaultLayer + baseLayer;
-        }
-        else
-        {
-            if (layerChange) spriteRenderer.sortingOrder = defaultLayer;
-        }
         MoveEnemy(direction);
     }
 

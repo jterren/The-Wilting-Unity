@@ -61,8 +61,20 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ground
+    uniqueID: 2948727249
+    locked: 0
+  - name: NorthPlayer
+    uniqueID: 256506997
+    locked: 0
   - name: Player
     uniqueID: 588050099
+    locked: 0
+  - name: SouthPlayer
+    uniqueID: 1551706789
+    locked: 0
+  - name: Hedges
+    uniqueID: 3328094623
     locked: 0
   m_RenderingLayers:
   - Default

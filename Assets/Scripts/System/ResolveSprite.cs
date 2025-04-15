@@ -12,27 +12,50 @@ public class ResolveSprite : MonoBehaviour
     private int defaultLayer;
     public bool layerChange;
     public string prefix = "";
+    private bool isPlayer;
+    private Transform player;
 
     void Start()
     {
-        animator = transform.parent.transform.parent.GetComponentInChildren<Animator>();
-        resolver = GetComponent<SpriteResolver>();
+        isPlayer = transform.root.name == "Player";
+        if (!isPlayer) player = Tools.FindGameObjectByName("Player").transform; //If gameObject is not player, will need reference to track position.
+        else
+        {
+            animator = transform.parent.transform.parent.GetComponentInChildren<Animator>();
+            resolver = GetComponent<SpriteResolver>();
+            category = resolver.GetCategory();
+        }
         spriteRenderer = GetComponent<SpriteRenderer>();
-        category = resolver.GetCategory();
         defaultLayer = spriteRenderer.sortingOrder;
     }
 
     void FixedUpdate()
     {
-        if (animator.GetBool("Vertical"))
+        if (isPlayer)
         {
-            resolver.SetCategoryAndLabel(category, $"{prefix}Up");
-            if (layerChange) spriteRenderer.sortingOrder = defaultLayer - baseLayer;
+            if (animator.GetBool("Vertical"))
+            {
+                resolver.SetCategoryAndLabel(category, $"{prefix}Up");
+                if (layerChange) spriteRenderer.sortingOrder = defaultLayer - baseLayer;
+            }
+            else
+            {
+                resolver.SetCategoryAndLabel(category, $"{prefix}Down");
+                if (layerChange) spriteRenderer.sortingOrder = defaultLayer;
+            }
         }
         else
         {
-            resolver.SetCategoryAndLabel(category, $"{prefix}Down");
-            if (layerChange) spriteRenderer.sortingOrder = defaultLayer;
+            if (transform.position.y < player.position.y)
+            {
+                // if (layerChange) spriteRenderer.sortingOrder = defaultLayer + baseLayer;
+                if (layerChange) spriteRenderer.sortingLayerName = "SouthPlayer";
+            }
+            else
+            {
+                // if (layerChange) spriteRenderer.sortingOrder = defaultLayer;
+                if (layerChange) spriteRenderer.sortingLayerName = "NorthPlayer";
+            }
         }
     }
 }

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1119784160538433678}
   - component: {fileID: 2435035788006800011}
   - component: {fileID: 8076393214029619906}
+  - component: {fileID: 6102464701724509369}
   m_Layer: 0
   m_Name: Wood Chest
   m_TagString: Quest
@@ -104,9 +105,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: 1551706789
+  m_SortingLayer: 3
+  m_SortingOrder: 0
   m_Sprite: {fileID: -371076993068565737, guid: 2ed26eb1501b4c44aa1d58c609386cd9,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -213,3 +214,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a9919c5fcebdda4bb4601aca1890230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6102464701724509369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4238764481163718417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71999833f9addd64dbb2f0332fe20864, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  resolver: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  baseLayer: 5
+  layerChange: 1
+  prefix: 

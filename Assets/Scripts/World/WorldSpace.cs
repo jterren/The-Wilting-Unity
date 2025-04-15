@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UnityEditor;
 using UnityEngine;
 
 public class WorldSpace : MonoBehaviour
@@ -23,28 +22,32 @@ public class WorldSpace : MonoBehaviour
         {
             var keys = world.gameObjects.Select(go => go.addressableKey).Distinct().ToList();
             Dictionary<string, GameObject> prefabsDict = await Tools.LoadPrefabsAsync(keys);
-            Tools.FinishLoading();
             if (world.gameObjects.Count != 0)
             {
-                foreach (GameObjectData obj in world.gameObjects)
+                foreach (Prefab addressable in world.gameObjects)
                 {
-                    if (prefabsDict.TryGetValue(obj.addressableKey, out GameObject prefab))
+                    if (prefabsDict.TryGetValue(addressable.addressableKey, out GameObject prefab))
                     {
-                        if (!Tools.GetAllObjectsInScene().Any(p => p.name == obj.prefabName))
+                        foreach (Vector2 obj in addressable.instances)
                         {
-                            GameObject temp = Instantiate(prefab, new Vector2(obj.x, obj.y), Quaternion.identity);
-                            temp.SetActive(obj.active);
-                            GameObject parent = GameObject.Find(obj.parent);
-                            if (parent) temp.transform.parent = parent.transform;
+                            if (!Tools.GetAllObjectsInScene().Any(p => p.name == addressable.addressableKey))
+                            {
+                                GameObject temp = Instantiate(prefab, new Vector2(obj.x, obj.y), Quaternion.identity);
+                                temp.SetActive(addressable.active);
+                                GameObject parent = GameObject.Find(addressable.parent);
+                                if (parent) temp.transform.parent = parent.transform;
+                            }
+
                         }
                     }
                     else
                     {
-                        Debug.LogWarning($"Prefab not found for key: {obj.addressableKey}");
+                        Debug.LogWarning($"Prefab not found for key: {addressable.addressableKey}");
                     }
                 }
 
             }
+            Tools.FinishLoading();
         }
         catch (Exception err)
         {
@@ -71,15 +74,15 @@ public struct WorldSaveData
 [Serializable]
 public class WorldData
 {
-    public List<GameObjectData> gameObjects = new();
+    public List<Prefab> gameObjects = new();
 }
 
+
 [Serializable]
-public class GameObjectData
+public class Prefab
 {
-    public string prefabName;
-    public float x, y;
+    public string addressableKey;
     public string parent;
     public bool active;
-    public string addressableKey;
+    public List<Vector2> instances = new();
 }

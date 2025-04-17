@@ -43,9 +43,9 @@ public class CreateMap : MonoBehaviour
     {
         if (GameManager.Instance.WorldSpace.world.gameObjects.Count == 0)
         {
-            Tools.FinishLoading();
             GenerateMazeBorders();
             CreateMazes();
+            Tools.FinishLoading();
         }
     }
     private void GenerateMazeBorders()

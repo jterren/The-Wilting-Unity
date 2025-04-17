@@ -8,7 +8,7 @@ public class WorldSpace : MonoBehaviour
 {
     public PlayerStats Player;
     public WorldData world = new();
-    public List<Task<GameObject>> instantiationTasks = new();
+    public List<GameObject> prefabs = new();
 
     private void Awake()
     {
@@ -21,12 +21,13 @@ public class WorldSpace : MonoBehaviour
         try
         {
             var keys = world.gameObjects.Select(go => go.addressableKey).Distinct().ToList();
-            Dictionary<string, GameObject> prefabsDict = await Tools.LoadPrefabsAsync(keys);
+            // Dictionary<string, GameObject> prefabsDict = await Tools.LoadPrefabsAsync(keys);
             if (world.gameObjects.Count != 0)
             {
                 foreach (Prefab addressable in world.gameObjects)
                 {
-                    if (prefabsDict.TryGetValue(addressable.addressableKey, out GameObject prefab))
+                    GameObject prefab = prefabs.FirstOrDefault(x => x.name == addressable.addressableKey);
+                    if (prefab != null)
                     {
                         foreach (Vector2 obj in addressable.instances)
                         {

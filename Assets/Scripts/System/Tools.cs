@@ -2,11 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Linq;
 using System;
-using System.ComponentModel.Design.Serialization;
 
 public class Tools : MonoBehaviour
 {
@@ -148,29 +145,29 @@ public class Tools : MonoBehaviour
         return objectsInScene;
     }
 
-    public static async Task<Dictionary<string, GameObject>> LoadPrefabsAsync(List<string> prefabNames)
-    {
-        var initHandle = Addressables.InitializeAsync();
-        await initHandle.Task;
-        Dictionary<string, GameObject> loadedPrefabs = new();
+    // public static async Task<Dictionary<string, GameObject>> LoadPrefabsAsync(List<string> prefabNames)
+    // {
+    //     var initHandle = Addressables.InitializeAsync();
+    //     await initHandle.Task;
+    //     Dictionary<string, GameObject> loadedPrefabs = new();
 
-        foreach (var prefabName in prefabNames)
-        {
-            AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(prefabName);
-            await handle.Task;
+    //     foreach (var prefabName in prefabNames)
+    //     {
+    //         AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(prefabName);
+    //         await handle.Task;
 
-            if (handle.Status == AsyncOperationStatus.Succeeded)
-            {
-                loadedPrefabs[prefabName] = handle.Result;
-            }
-            else
-            {
-                Debug.LogWarning($"Failed to load prefab: {prefabName}");
-            }
-        }
+    //         if (handle.Status == AsyncOperationStatus.Succeeded)
+    //         {
+    //             loadedPrefabs[prefabName] = handle.Result;
+    //         }
+    //         else
+    //         {
+    //             Debug.LogWarning($"Failed to load prefab: {prefabName}");
+    //         }
+    //     }
 
-        return loadedPrefabs;
-    }
+    //     return loadedPrefabs;
+    // }
 
     public static bool CollidingSpawnByTag(Vector2 pos, List<string> conflictingTag)
     {

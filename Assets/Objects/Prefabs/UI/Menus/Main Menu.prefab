@@ -186,6 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f8b4fc3cb4ac241b2e6683bc0e9c35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoadingScreen: {fileID: 0}
 --- !u!1 &8659359332958809911
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,6 +437,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Settings
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413573156117420334, guid: 2279234ff30b1f34ba97715bdb3f7c4b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -738,6 +744,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ExitDesktop
+      objectReference: {fileID: 0}
+    - target: {fileID: 769119783556943441, guid: 143269e8a9b06b1439527daec03fc6f2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5013270869755972201, guid: 143269e8a9b06b1439527daec03fc6f2,
         type: 3}

@@ -11,13 +11,13 @@ public class MainMenu : MonoBehaviour
     }
     public void Resume()
     {
-        ActivateLoading();
         SaveSystem.Resume();
+        ActivateLoading();
     }
     public void NewGame()
     {
-        ActivateLoading();
         SceneManager.LoadScene("Maze");
+        ActivateLoading();
     }
 
 

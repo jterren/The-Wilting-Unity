@@ -32,6 +32,7 @@ public class EnemyData : MonoBehaviour
         {
             GameManager.Instance.Player.curKills += 1;
             aggro = false;
+            transform.parent.GetComponent<ActivateSpawn>().enemies.Remove(gameObject);
             Destroy(gameObject);
         }
 

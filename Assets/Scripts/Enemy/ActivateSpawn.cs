@@ -6,29 +6,32 @@ public class ActivateSpawn : MonoBehaviour
     private Collider2D playerAOE;
     private Collider2D Trigger;
     public List<GameObject> enemyType;
+    public List<GameObject> enemies = new();
+    private GameObject activator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        playerAOE = Tools.GetChildByName(GameObject.FindGameObjectWithTag("Player").transform, "AOE").GetComponent<CircleCollider2D>();
+        playerAOE = Tools.GetChildByName(Tools.FindGameObjectByName("Player").transform, "AOE").GetComponent<CircleCollider2D>();
         Trigger = GetComponent<CircleCollider2D>();
+        activator = transform.GetChild(0).gameObject;
+        CreateEnemies(transform);
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (playerAOE && Trigger.IsTouching(playerAOE))
+        if (Trigger.IsTouching(playerAOE) && activator.activeInHierarchy)
         {
-            CreateEnemies(transform);
-            transform.GetChild(0).gameObject.SetActive(false);
-            foreach (GameObject enemy in Tools.GetAllChildrenByTag(transform, "Enemy"))
+            activator.SetActive(false);
+            foreach (GameObject enemy in enemies)
             {
                 enemy.SetActive(true);
             }
-            GetComponent<ActivateSpawn>().enabled = false;
         }
-        else if (!playerAOE)
+
+        if (!activator.activeInHierarchy && enemies.Count == 0)
         {
-            playerAOE = Tools.GetChildByName(GameObject.FindGameObjectWithTag("Player").transform, "AOE").GetComponent<CircleCollider2D>();
+            Destroy(gameObject);
         }
     }
 
@@ -44,6 +47,7 @@ public class ActivateSpawn : MonoBehaviour
             temp.GetComponent<EnemyData>().x = gameObject;
             temp.GetComponent<EnemyData>().Player = GameManager.Instance.Player.transform;
             Tools.CaptureObject(temp, prefab.name);
+            enemies.Add(temp);
         }
     }
 }

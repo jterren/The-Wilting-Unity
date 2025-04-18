@@ -130,7 +130,7 @@ public class Tools : MonoBehaviour
 
     public static void CompleteGame()
     {
-        SceneManager.LoadScene("GameOver");
+        SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
     }
 
     public static List<GameObject> GetAllObjectsInScene()

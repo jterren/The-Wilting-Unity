@@ -11,7 +11,7 @@ public class SceneData : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.Instance.Scene = this;
+        if (GameManager.Instance) GameManager.Instance.Scene = this;
     }
 
     public void Save(ref SceneSaveData data)

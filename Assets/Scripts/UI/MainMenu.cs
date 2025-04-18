@@ -16,7 +16,7 @@ public class MainMenu : MonoBehaviour
     }
     public void NewGame()
     {
-        SceneManager.LoadScene("Maze");
+        SceneManager.LoadScene("Maze", LoadSceneMode.Single);
         ActivateLoading();
     }
 

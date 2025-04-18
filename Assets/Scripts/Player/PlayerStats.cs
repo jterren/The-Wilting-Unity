@@ -24,7 +24,7 @@ public class PlayerStats : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.Instance.Player = this;
+        if (GameManager.Instance.Player == null) GameManager.Instance.Player = this;
     }
 
     // Use this for initialization

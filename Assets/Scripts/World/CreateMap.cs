@@ -66,11 +66,11 @@ public class CreateMap : MonoBehaviour
     private void CreateMazes()
     {
         int half = length / 2;
-        for (int y = 0; y < 1; y++)
+        for (int y = 0; y < 2; y++)
         {
-            for (int x = 0; x < 1; x++)
+            for (int x = 0; x < 2; x++)
             {
-                mazes.Add(new Maze(new Vector2(x * half, y * half), half, algos[UnityEngine.Random.Range(0, algos.Count)], finishObjects[x]));
+                mazes.Add(new Maze(new Vector2(x * half, y * half), half, algos[UnityEngine.Random.Range(0, algos.Count)], finishObjects[UnityEngine.Random.Range(0, finishObjects.Count)]));
             }
         }
         FillMazes();
@@ -83,7 +83,8 @@ public class CreateMap : MonoBehaviour
             curMaze = current;
             CreateHorizontalWall(current.start.x, (int)current.start.y + current.length, (int)current.start.x + current.length, true);
             CreateVerticalWall((int)current.start.x + current.length, current.start.y, (int)current.start.y + current.length, true);
-            curMaze.algorithm().Invoke();
+            FillRegionWithWalls();
+            if (current.start == Vector2.zero) curMaze.algorithm().Invoke();
         }
     }
 
@@ -123,7 +124,6 @@ public class CreateMap : MonoBehaviour
 
     private void HuntAndKill()
     {
-        FillRegionWithWalls();
         if (Tools.IsObjectInMaze(player.transform.position, curMaze))
         {
             currentPos = player.transform.position;

@@ -28,7 +28,7 @@ public class SceneLoader : MonoBehaviour
     {
         if (_sceneDataSOsIndexMap.TryGetValue(sceneId, out int index))
         {
-            SceneManager.LoadScene(index);
+            SceneManager.LoadScene(index, LoadSceneMode.Single);
         }
         else
         {
@@ -40,7 +40,7 @@ public class SceneLoader : MonoBehaviour
     {
         if (_sceneDataSOsIndexMap.TryGetValue(sceneId, out int index))
         {
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(index);
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(index, LoadSceneMode.Single);
             asyncLoad.allowSceneActivation = false;
 
             while (!asyncLoad.isDone)

@@ -26,6 +26,7 @@ public class Pause : MonoBehaviour
     {
         SaveSystem.Save();
         SceneManager.LoadScene(0);
+        PauseGame();
     }
 
     public void ExitDesktop()

@@ -12,12 +12,7 @@ public class LoadMenu : MonoBehaviour
     public GameObject loadingScreen;
     void Awake()
     {
-        Transform container = GameObject.Find("SaveFiles").GetComponent<RectTransform>().transform;
-        foreach (string file in Directory.GetFiles(SaveSystem.SaveFolder).OrderByDescending(x => Directory.GetLastWriteTime(x)))
-        {
-            foundFiles.Add(new(file, Directory.GetLastWriteTime(file).ToString()));
-            Instantiate(saveTile, container, false).GetComponentInChildren<TextMeshProUGUI>().text = foundFiles[^1].Name;
-        }
+        Refresh();
     }
     public void Start()
     {
@@ -31,14 +26,22 @@ public class LoadMenu : MonoBehaviour
         {
             if (player != null) player.SetActive(false);
             if (playerUI != null) playerUI.SetActive(false);
-            ActivateLoading();
             SaveSystem.LoadAsync(foundFiles.FirstOrDefault(x => x.Name.Contains(GameManager.Instance.SelectedSave)).Path);
         }
     }
-    public void ActivateLoading()
+
+    public void Refresh()
     {
-        gameObject.transform.parent.gameObject.SetActive(false);
-        loadingScreen.SetActive(true); ;
+        Transform container = Tools.FindGameObjectByName("SaveFiles").GetComponent<RectTransform>().transform;
+        Tools.GetAllChildren(container).ForEach((x) =>
+        {
+            Destroy(x);
+        });
+        foreach (string file in Directory.GetFiles(SaveSystem.SaveFolder).OrderByDescending(x => Directory.GetLastWriteTime(x)))
+        {
+            foundFiles.Add(new(file, Directory.GetLastWriteTime(file).ToString()));
+            Instantiate(saveTile, container, false).GetComponentInChildren<TextMeshProUGUI>().text = foundFiles[^1].Name;
+        }
     }
 }
 

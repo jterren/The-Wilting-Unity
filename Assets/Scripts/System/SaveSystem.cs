@@ -76,10 +76,17 @@ public static class SaveSystem
 
     public static FileInfo GetRecentSave()
     {
-        return new DirectoryInfo(SaveFolder)
-            .GetFiles("*.sav") // Get all .sav files
-            .OrderByDescending(f => f.LastWriteTime) // Sort by last modified time (most recent first)
-            .FirstOrDefault();
+        try
+        {
+            return new DirectoryInfo(SaveFolder)
+                .GetFiles("*.sav") // Get all .sav files
+                .OrderByDescending(f => f.LastWriteTime) // Sort by last modified time (most recent first)
+                .FirstOrDefault();
+        }
+        catch (Exception err)
+        {
+            return null;
+        }
     }
 
 }

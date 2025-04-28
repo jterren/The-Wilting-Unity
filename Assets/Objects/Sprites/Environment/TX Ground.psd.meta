@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 2d442e1acf5b447429acc6d78e4daf93
+guid: 5b46ea703e0f026448bd8db4898c3e9c
 TextureImporter:
   internalIDToNameTable:
   - first:
       213: -5132427087594471385
     second: TX Ground_0
+  - first:
+      213: -1157058674611582349
+    second: TX Ground_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -74,8 +77,8 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 4
-    textureCompression: 1
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -155,20 +158,20 @@ TextureImporter:
       name: TX Ground_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 466
-        width: 42
-        height: 42
+        x: 1
+        y: 471
+        width: 40
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: f0079d0848485294c9b388b6283ac749
-      internalID: 694225241
+      spriteID: 720c650b1c4f5c8b0800000000000000
+      internalID: -5132427087594471385
       vertices: []
       indices: 
       edges: []
@@ -177,20 +180,20 @@ TextureImporter:
       name: TX Ground_1
       rect:
         serializedVersion: 2
-        x: 53
-        y: 466
-        width: 42
-        height: 42
+        x: 42
+        y: 471
+        width: 40
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: bc18fc8d9a41e5346994c0d74b3e903b
-      internalID: -2006029588
+      spriteID: 37a0e7b044d41ffe0800000000000000
+      internalID: -1157058674611582349
       vertices: []
       indices: 
       edges: []
@@ -199,7 +202,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b5be20409ef3998478fdf5d57e092500
+    spriteID: 46f65fc219677174fa4456fca5f9185b
     internalID: 0
     vertices: []
     indices: 
@@ -209,8 +212,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      TX Ground_0: 694225241
-      TX Ground_1: -2006029588
+      TX Ground_0: -5132427087594471385
+      TX Ground_1: -1157058674611582349
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

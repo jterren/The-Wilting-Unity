@@ -175,7 +175,7 @@ public class CreateMap : MonoBehaviour
                 {
                     GameManager.Instance.WorldSpace.world.gameObjects.First(x => x.addressableKey == obstacle.name.Replace("(Clone)", "")).instances.RemoveAt(index);
                     GameObject prefab = groundTiles[UnityEngine.Random.Range(0, groundTiles.Count)];
-                    GameObject temp = Instantiate(prefab, obstacle.transform.position, Quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 4) * 90));
+                    GameObject temp = Instantiate(prefab, obstacle.transform.position, Quaternion.identity); //Replacing Quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 4) * 90)
                     temp.transform.parent = groundParent.transform;
                     Tools.CaptureObject(temp, prefab.name);
                     Destroy(obstacle.gameObject);

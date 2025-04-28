@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class MainMenu : MonoBehaviour
     public void Start()
     {
         LoadingScreen = Tools.FindGameObjectByName("Loading");
+        if (SaveSystem.GetRecentSave() == null) Tools.GetChildByName(transform, "ResumeLast").GetComponent<Button>().interactable = false;
     }
     public void Resume()
     {

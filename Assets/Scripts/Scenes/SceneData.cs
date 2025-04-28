@@ -16,7 +16,7 @@ public class SceneData : MonoBehaviour
 
     public void Save(ref SceneSaveData data)
     {
-        data.SceneId = Data.UniqueName;
+        data.SceneId = Data.SceneIndex.ToString();
     }
 
     public async Task LoadAsync(SceneSaveData data)

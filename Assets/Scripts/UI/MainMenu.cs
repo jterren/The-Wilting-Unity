@@ -14,12 +14,10 @@ public class MainMenu : MonoBehaviour
     public void Resume()
     {
         SaveSystem.Resume();
-        ActivateLoading();
     }
     public void NewGame()
     {
         SceneManager.LoadScene("Maze", LoadSceneMode.Single);
-        ActivateLoading();
     }
 
 
@@ -31,11 +29,5 @@ public class MainMenu : MonoBehaviour
     public void ExitDesktop()
     {
         Application.Quit();
-    }
-
-    public void ActivateLoading()
-    {
-        LoadingScreen.SetActive(true);
-        gameObject.transform.root.gameObject.SetActive(false);
     }
 }

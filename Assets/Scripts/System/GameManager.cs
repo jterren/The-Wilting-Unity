@@ -14,10 +14,6 @@ public class GameManager : MonoBehaviour
             {
                 return null;
             }
-            if (instance == null)
-            {
-                // Instantiate(Resources.Load<GameManager>("GameManager"));
-            }
 #endif
             return instance;
         }
@@ -29,14 +25,12 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
         else if (Tools.FindGameObjectByName("GameManager")) Destroy(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
+
     }
 
     void Update()

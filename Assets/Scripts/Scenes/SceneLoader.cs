@@ -24,39 +24,19 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
-    public void LoadSceneByIndex(string sceneId)
+    public async Task LoadSceneByIndexAsync(int index)
     {
-        if (_sceneDataSOsIndexMap.TryGetValue(sceneId, out int index))
-        {
-            SceneManager.LoadScene(index, LoadSceneMode.Single);
-        }
-        else
-        {
-            Debug.LogError("No scene found: " + sceneId);
-        }
-    }
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(index, LoadSceneMode.Single);
+        asyncLoad.allowSceneActivation = false;
 
-    public async Task LoadSceneByIndexAsync(string sceneId)
-    {
-        if (_sceneDataSOsIndexMap.TryGetValue(sceneId, out int index))
+        while (!asyncLoad.isDone)
         {
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(index, LoadSceneMode.Single);
-            asyncLoad.allowSceneActivation = false;
-
-            while (!asyncLoad.isDone)
+            if (asyncLoad.progress >= 0.9f)
             {
-                if (asyncLoad.progress >= 0.9f)
-                {
-                    asyncLoad.allowSceneActivation = true;
-                    break;
-                }
-                await Task.Yield();
+                asyncLoad.allowSceneActivation = true;
+                break;
             }
-
-        }
-        else
-        {
-            Debug.LogError("No scene found: " + sceneId);
+            await Task.Yield();
         }
     }
 }

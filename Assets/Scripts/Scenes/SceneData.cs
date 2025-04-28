@@ -16,7 +16,7 @@ public class SceneData : MonoBehaviour
 
     public void Save(ref SceneSaveData data)
     {
-        data.SceneId = Data.SceneIndex.ToString();
+        data.SceneId = Data.SceneIndex;
     }
 
     public async Task LoadAsync(SceneSaveData data)
@@ -43,5 +43,5 @@ public class SceneData : MonoBehaviour
 [System.Serializable]
 public struct SceneSaveData
 {
-    public string SceneId;
+    public int SceneId;
 }

@@ -19,6 +19,7 @@ public class Pause : MonoBehaviour
     public void SaveGame()
     {
         SaveSystem.Save();
+        Tools.FindGameObjectByName("Load Menu").GetComponent<LoadMenu>().Refresh();
         PauseGame();
     }
 

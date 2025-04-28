@@ -22,9 +22,9 @@ public class Tools : MonoBehaviour
 
         return inactiveObjects;
     }
-    public static GameObject FindGameObjectByName(string name)
+    public static GameObject FindGameObjectByName(string name, bool inScene = true)
     {
-        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        GameObject[] allObjects = inScene ? FindObjectsByType<GameObject>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID) : Resources.FindObjectsOfTypeAll<GameObject>();
 
         foreach (GameObject obj in allObjects)
         {
@@ -33,7 +33,7 @@ public class Tools : MonoBehaviour
                 return obj;
             }
         }
-
+        Debug.Log($"{name} not found in {(inScene ? "scene." : "assets.")}");
         return null; ;
     }
 
@@ -199,12 +199,14 @@ public class Tools : MonoBehaviour
 
     public static void FinishLoading()
     {
-
-        GameObject loading = FindGameObjectByName("Loading");
-        FindInactiveGameObjectsByTag("UI").ForEach(obj => { if (!obj.activeInHierarchy) obj.SetActive(true); });
-        if (loading != null && loading.activeInHierarchy) loading.SetActive(false);
         GameObject player = FindGameObjectByName("Player");
-        if (player != null && !player.activeInHierarchy) player.SetActive(true);
+        if (player != null)
+        {
+            player.SetActive(true);
+        }
+        FindInactiveGameObjectsByTag("UI").ForEach(obj => { if (!obj.activeInHierarchy) obj.SetActive(true); });
+        GameObject loading = FindGameObjectByName("Loading");
+        if (loading != null) loading.SetActive(false);
     }
 
     public static void CaptureObject(GameObject temp, string addressableKey)

@@ -14,6 +14,7 @@ public class Pause : MonoBehaviour
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0 : 1;
         pauseMenu.SetActive(isPaused);
+        if (!pauseMenu.activeInHierarchy) Tools.FindGameObjectByName("Load Menu").SetActive(false);
     }
 
     public void SaveGame()

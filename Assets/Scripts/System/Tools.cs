@@ -207,6 +207,7 @@ public class Tools : MonoBehaviour
         FindInactiveGameObjectsByTag("UI").ForEach(obj => { if (!obj.activeInHierarchy) obj.SetActive(true); });
         GameObject loading = FindGameObjectByName("Loading");
         if (loading != null) loading.SetActive(false);
+        Time.timeScale = 1;
     }
 
     public static void CaptureObject(GameObject temp, string addressableKey)

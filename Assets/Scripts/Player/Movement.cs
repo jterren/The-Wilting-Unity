@@ -49,9 +49,10 @@ public class Movement : MonoBehaviour
         {
             animator.SetBool("isWalking", false);
         }
+        animator.SetInteger("Horizontal", MathF.Sign(Input.GetAxis("Horizontal")));
     }
 
-    void SetSprites()
+    void SetSprites() //Less buggy to track Vertical travel by boolean instead of by input since layer manipulation needs to occur under condition.
     {
         int direction = MathF.Sign(Input.GetAxis("Vertical"));
         if (!animator.GetBool("Vertical") && direction > 0)

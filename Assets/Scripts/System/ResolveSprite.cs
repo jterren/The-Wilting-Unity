@@ -14,6 +14,7 @@ public class ResolveSprite : MonoBehaviour
     public string prefix = "";
     private bool isPlayer;
     private Transform player;
+    private bool lastVertical = true;
 
     void Start()
     {
@@ -33,14 +34,16 @@ public class ResolveSprite : MonoBehaviour
     {
         if (isPlayer)
         {
-            if (animator.GetBool("Vertical"))
+            if (!animator.GetBool("Vertical") && lastVertical)
             {
-                resolver.SetCategoryAndLabel(category, $"{prefix}Up");
-                if (layerChange) spriteRenderer.sortingOrder = defaultLayer - baseLayer;
-            }
-            else
-            {
+                lastVertical = false;
                 resolver.SetCategoryAndLabel(category, $"{prefix}Down");
+                if (layerChange) spriteRenderer.sortingOrder = baseLayer * 2 - defaultLayer;
+            }
+            else if (animator.GetBool("Vertical") && !lastVertical)
+            {
+                lastVertical = true;
+                resolver.SetCategoryAndLabel(category, $"{prefix}Up");
                 if (layerChange) spriteRenderer.sortingOrder = defaultLayer;
             }
         }
@@ -48,12 +51,10 @@ public class ResolveSprite : MonoBehaviour
         {
             if (transform.position.y < player.position.y)
             {
-                // if (layerChange) spriteRenderer.sortingOrder = defaultLayer + baseLayer;
                 if (layerChange) spriteRenderer.sortingLayerName = "SouthPlayer";
             }
             else
             {
-                // if (layerChange) spriteRenderer.sortingOrder = defaultLayer;
                 if (layerChange) spriteRenderer.sortingLayerName = "NorthPlayer";
             }
         }
